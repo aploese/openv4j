@@ -9,7 +9,7 @@
     <url>http://openv4j.sourceforge.net</url>
     <description>OpenV For Java</description>
 
-   <!-- Developers and Contributors -->
+    <!-- Developers and Contributors -->
     <organization>
         <name>OpenV4J</name>
         <url>http://sourceforge.net/projects/openv4j/</url>
@@ -83,7 +83,7 @@
         <connection>scm:git://openv4j.git.sourceforge.net/gitroot/openv4j/openv4j</connection>
         <url>http://openv4j.git.sourceforge.net/git/gitweb-index.cgi</url>
     </scm>
- 
+
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -179,7 +179,7 @@
                 <configuration>
                     <generateReports>${site.generateReports}</generateReports>
                     <port>${site.run.port}</port>
-                    <stagingDirectory>${java.io.tmpdir}/mbus4j</stagingDirectory>
+                    <stagingDirectory>${java.io.tmpdir}/openv4j</stagingDirectory>
                 </configuration>
             </plugin>
             <plugin>
@@ -222,7 +222,7 @@
                 <artifactId>jalopy-maven-plugin</artifactId>
                 <version>1.0-alpha-1</version>
                 <configuration>
-                    <convention>${project.parent.basedir}/src/main/jalopy/jalopy-sun.xml</convention>
+                    <convention>${project.parent.basedir}/src/main/jalopy/jalopy-nb.xml</convention>
                 </configuration>
                 <dependencies>
                     <dependency>

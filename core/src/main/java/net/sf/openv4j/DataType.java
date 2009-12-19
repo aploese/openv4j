@@ -1,19 +1,35 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright 2009, openv4j.sf.net, and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as
+ * published by the Free Software Foundation; either version 3 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ *
+ * $Id: $
+ *
+ * @author arnep
  */
-
 package net.sf.openv4j;
 
 import java.io.Serializable;
 
 /**
- * UINT LSB first
- * HEX MSB first
- * @author aploese
+ * UINT LSB first HEX MSB first
  */
-public enum DataType implements Serializable {
-    BOOL(1),
+public enum DataType implements Serializable {BOOL(1),
     UINT_1(1),
     UINT_2(2),
     UINT_4(4),
@@ -24,10 +40,15 @@ public enum DataType implements Serializable {
 
     final int length;
 
-    private DataType (int length) {
+    private DataType(int length) {
         this.length = length;
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     int getLength() {
         return length;
     }

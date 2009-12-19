@@ -1,18 +1,35 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright 2009, openv4j.sf.net, and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as
+ * published by the Free Software Foundation; either version 3 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ *
+ * $Id: $
+ *
+ * @author arnep
  */
 package net.sf.openv4j;
 
 import java.io.Serializable;
 
 /**
- *
- * @author aploese
+ * 
  */
-public enum Devices implements  Serializable {
-
-    GWG_BT2(0x2054, Protocol.GWG),
+public enum Devices implements Serializable {GWG_BT2(0x2054, Protocol.GWG),
     GWG_VBEM(0x2053, Protocol.GWG),
     GWG_VBT(0x2053, Protocol.GWG),
     GWG_VWMS(0x2053, Protocol.GWG),
@@ -49,7 +66,6 @@ public enum Devices implements  Serializable {
     VScotHC2(0x20ca, Protocol._300, Protocol.KW),
     VScotHO1(0x20cb, Protocol._300, Protocol.KW);
 
-
     final int id;
     final Protocol[] protocols;
 
@@ -74,13 +90,13 @@ public enum Devices implements  Serializable {
         for (Devices dev : Devices.values()) {
             if (dev.id == devId) {
                 return dev;
+            }
         }
-        }
-            return null;
+
+        return null;
     }
 
     public Protocol[] getProtocols() {
-        return new Protocol[] {Protocol.KW};
+        return new Protocol[] { Protocol.KW };
     }
-
 }

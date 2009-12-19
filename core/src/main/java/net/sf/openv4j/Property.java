@@ -1,18 +1,35 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright 2009, openv4j.sf.net, and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as
+ * published by the Free Software Foundation; either version 3 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ *
+ * $Id: $
+ *
+ * @author arnep
  */
-
 package net.sf.openv4j;
 
 import java.io.Serializable;
 
 /**
- *
- * @author aploese
+ * 
  */
-public enum Property implements Serializable {
-    UNKNOWN("Unknown"),
+public enum Property implements Serializable {UNKNOWN("Unknown"),
     DEVICE("Device"),
     BURNER_STAGE_1("Burner stage 1"),
     BURNER_STAGE_2("Burner stage 2"),
@@ -45,8 +62,7 @@ public enum Property implements Serializable {
     SLOPE("slope"),
     SHIFT("shift"),
     //TODO to String??
-    OPERATING_TYPE("operating type"),
-    ROOM("room"),
+    OPERATING_TYPE("operating type"),ROOM("room"),
     FROST("frost"),
     PUMP("pump"),
     HEATUP_TIME("heatup time"),
@@ -68,7 +84,7 @@ public enum Property implements Serializable {
     C2_05("C2 05"),
     C2_06("C2 06"),
     C2_13("C2 13"),
-    C2_1F("C2 1F"), //2 byte
+    C2_1F("C2 1F"),
     C2_21("C2 21"),
     C2_23("C2 23"),
     C2_24("C2 24"),
@@ -78,18 +94,15 @@ public enum Property implements Serializable {
     C2_32("C2 32"),
     C2_33("C2 33"),
     //BURNER 2 stages
-    C2_10("C2 10"),
-    C2_11("C2 11"),
+    C2_10("C2 10"),C2_11("C2 11"),
     C2_12("C2 12"),
     //BURNER Modulated
-    C2_15("C2 15"),
-    C2_16("C2 16"),
+    C2_15("C2 15"),C2_16("C2 16"),
     C2_17("C2 17"),
-    C2_18("C2 18"), // 2 byte
+    C2_18("C2 18"),
     C2_1A("C2 1A"),
     //DHW
-    C2_55("C2 55"),
-    C2_56("C2 56"),
+    C2_55("C2 55"),C2_56("C2 56"),
     C2_58("C2 58"),
     C2_59("C2 59"),
     C2_60("C2 60"),
@@ -104,8 +117,7 @@ public enum Property implements Serializable {
     C2_74("C2 74"),
     C2_75("C2 75"),
     //COMMON
-    C2_7F("C2 7F"),
-    C2_80("C2 80"),
+    C2_7F("C2 7F"),C2_80("C2 80"),
     C2_81("C2 81"),
     C2_82("C2 82"),
     C2_83("C2 83"),
@@ -121,8 +133,7 @@ public enum Property implements Serializable {
     C2_94("C2 94"),
     C2_95("C2 95"),
     //MIXER
-    C2_A0("C2 A0"),
-    C2_A2("C2 A2"),
+    C2_A0("C2 A0"),C2_A2("C2 A2"),
     C2_A3("C2 A3"),
     C2_A4("C2 A4"),
     C2_A5("C2 A5"),
@@ -158,14 +169,29 @@ public enum Property implements Serializable {
         this.label = label;
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public String getName() {
         return name();
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public String getLabel() {
         return label;
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     @Override
     public String toString() {
         return label;

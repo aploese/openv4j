@@ -1,6 +1,26 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright 2009, openv4j.sf.net, and individual contributors as indicated
+ * by the @authors tag. See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as
+ * published by the Free Software Foundation; either version 3 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ *
+ * $Id: $
+ *
+ * @author arnep
  */
 package net.sf.openv4j;
 
@@ -11,30 +31,53 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
+ * DOCUMENT ME!
  *
  * @author aploese
  */
 public class V200KW2Test extends Device {
-
+    /**
+     * Creates a new V200KW2Test object.
+     */
     public V200KW2Test() {
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @throws Exception DOCUMENT ME!
+     */
     @BeforeClass
     public static void setUpClass() throws Exception {
         InitLog.LogInit.initLog(InitLog.LogInit.INFO);
-//                log = LoggerFactory.getLogger(PrintMemoryMap.class);
 
+        //                log = LoggerFactory.getLogger(PrintMemoryMap.class);
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @throws Exception DOCUMENT ME!
+     */
     @AfterClass
     public static void tearDownClass() throws Exception {
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @throws Exception DOCUMENT ME!
+     */
     @Before
     public void setUp() throws Exception {
         super.mySetUp();
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @throws Exception DOCUMENT ME!
+     */
     @After
     public void tearDown() throws Exception {
         super.myTearDown();
@@ -42,19 +85,38 @@ public class V200KW2Test extends Device {
 
     /**
      * Test of setStreams method, of class PrintMemoryMap.
+     *
+     * @throws Exception DOCUMENT ME!
      */
     @Test
-    public void testToString() throws Exception {
-        System.out.println("All");
+    public void testPrintAddresses() throws Exception {
+        System.out.println("PrintAddresses");
         readFromStream(KW2Dummy.class.getResourceAsStream("V200KW2-MemMap.txt"));
 
-        System.err.println(container.toString());
-        System.err.println(DataPoint.printAll(container));
+        StringBuilder sb = new StringBuilder();
 
+        for (int i = 0; i < 0x010000;) {
+            DataPoint p = DataPoint.findByAddr(i);
+
+            if (p != null) {
+                p.toString(container, sb, String.format("\t@0x%04x %s: ", p.getAddr(), p.getGroup().getLabel()));
+                i += p.getLength();
+            } else {
+                if (container.getUInt1(i) != 0x00ff) {
+                    sb.append(String.format("\t\t@0x%04x 0x%02x byte: %d\tshort: %d\tint: %d %n", i, container.getUInt1(i), container.getUInt1(i), ((0x00fffe - i) < 0) ? 0x00ff : container.getUInt2(i), ((0x00fffc - i) < 0) ? 0x00ff : container.getUInt4(i)));
+                }
+
+                i++;
+            }
+        }
+
+        System.err.print(sb.toString());
     }
 
     /**
      * Test of setStreams method, of class PrintMemoryMap.
+     *
+     * @throws Exception DOCUMENT ME!
      */
     @Test
     public void testSearchAddresses() throws Exception {
@@ -72,37 +134,30 @@ public class V200KW2Test extends Device {
                 case TEMP_PARTY:
                 case TEMP_REDUCED:
                     DataPoint.printMatchingAddesses(p, container, sb);
+
                     break;
+
                 default:
                     DataPoint.printMatchingAddesses(p, container, sb);
+
                     break;
             }
         }
-//        System.err.print(sb.toString());
+
+        //        System.err.print(sb.toString());
     }
 
     /**
      * Test of setStreams method, of class PrintMemoryMap.
+     *
+     * @throws Exception DOCUMENT ME!
      */
     @Test
-    public void testPrintAddresses() throws Exception {
-        System.out.println("PrintAddresses");
+    public void testToString() throws Exception {
+        System.out.println("All");
         readFromStream(KW2Dummy.class.getResourceAsStream("V200KW2-MemMap.txt"));
 
-        StringBuilder sb = new StringBuilder();
-
-        for (int i = 0; i < 0x010000;) {
-            DataPoint p = DataPoint.findByAddr(i);
-            if (p != null) {
-                p.toString(container, sb, String.format("\t@0x%04x %s: ", p.getAddr(), p.getGroup().getLabel()));
-                i += p.getLength();
-            } else {
-                if (container.getUInt1(i) != 0x00ff) {
-                    sb.append(String.format("\t\t@0x%04x 0x%02x byte: %d\tshort: %d\tint: %d %n", i, container.getUInt1(i), container.getUInt1(i), (0x00fffe - i) < 0 ? 0x00ff : container.getUInt2(i), (0x00fffc - i) < 0 ? 0x00ff : container.getUInt4(i)));
-                }
-                i++;
-            }
-        }
-        System.err.print(sb.toString());
+        System.err.println(container.toString());
+        System.err.println(DataPoint.printAll(container));
     }
 }
