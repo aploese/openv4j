@@ -147,10 +147,10 @@
     </dependencyManagement>
 
     <modules>
-        <module>core</module>
-        <module>swing-gui</module>
-        <module>test-device</module>
-        <module>memory-image</module>
+        <module>openv4j-core</module>
+        <module>openv4j-swing-gui</module>
+        <module>openv4j-test-device</module>
+        <module>openv4j-memory-image</module>
     </modules>
 
     <build>

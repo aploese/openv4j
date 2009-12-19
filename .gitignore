@@ -1,6 +1,5 @@
-core/target/
-memory-image/target/
-swing-gui/target/
+openv4j-core/target/
+openv4j-memory-image/target/
+openv4j-swing-gui/target/
+openv4j-test-device/target/
 target/
-test-device/target/
-
