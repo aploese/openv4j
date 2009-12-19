@@ -1,0 +1,6 @@
+core/target/
+memory-image/target/
+swing-gui/target/
+target/
+test-device/target/
+

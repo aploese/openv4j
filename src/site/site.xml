@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project>
+    <version />
+    <bannerLeft>
+        <name>OpenV4J</name>
+        <href>http://opnv4j.sf.net/</href>
+    </bannerLeft>
+    <bannerRight>
+        <name>OpenV4J Overview</name>
+        <href>http://openv4j.sf.net</href>
+    </bannerRight>
+    <body>
+        <links>
+            <item name="Mango Open Source M2M" href="http://mango.serotonisoftware.com"/>
+            <item name="OpenV4J Core" href="http://openv4j.sf.net/openv4j-core"/>
+            <item name="OpenV4J Memory Image" href="http://openv4j.sf.net/openv4j-memory-image"/>
+            <item name="OpenV4J Test Device" href="http://openv4j.sf.net/openv4j-test-device"/>
+        </links>
+        <menu name="OPenV4J">
+            <item name="Introduction" href="index.html"/>
+        </menu>
+        <menu name="Sub Projects">
+            <item name="OpenV4J Memory Image" href="openv4j-memory-image/index.html"/>
+            <item name="OpenV4J Test Device" href="openv4j-test-device/index.html"/>
+        </menu>
+        <menu ref="reports" inherit="bottom"/>
+    </body>
+</project>
