@@ -127,19 +127,18 @@ public class Main {
                     case ENERGY_KWH:
                     case TEMP_MAX:
                     case CONFIG:
-                        Object o =p.decode(container);
+                        Object o = p.decode(container);
                         if (o instanceof Double) {
-                            if (Double.compare(-1.0, (Double)o) == 0) {
-
+                            if (Double.compare(-1.0, (Double) o) == 0) {
                             } else {
                                 DataPoint.printMatchingAddesses(p, container, sb);
                             }
                         } else {
-                                DataPoint.printMatchingAddesses(p, container, sb);
+                            DataPoint.printMatchingAddesses(p, container, sb);
                         }
                         break;
                     default:
-                    //    DataPoint.printMatchingAddesses(p, container, sb);
+                        //    DataPoint.printMatchingAddesses(p, container, sb);
                         break;
                 }
             }
