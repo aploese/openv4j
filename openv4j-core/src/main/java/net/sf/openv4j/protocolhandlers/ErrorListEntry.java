@@ -22,43 +22,55 @@
  *
  * @author arnep
  */
-package net.sf.openv4j;
+package net.sf.openv4j.protocolhandlers;
+
+import java.util.Date;
 
 /**
- * DOCUMENT ME!
  *
  * @author aploese
  */
-public class CycleTimes {
+public class ErrorListEntry {
+    private int errorCode;
+    private Date tinestamp;
 
-    private CycleTimeEntry[] entries;
+    ErrorListEntry(int errorCode, Date timeStamp) {
+        this.errorCode = errorCode;
+        this.tinestamp = timeStamp;
+    }
 
-    public CycleTimes(int numberOfCycles) {
-        entries = new CycleTimeEntry[numberOfCycles];
+    /**
+     * @return the errorCode
+     */
+    public int getErrorCode() {
+        return errorCode;
+    }
+
+    /**
+     * @param errorCode the errorCode to set
+     */
+    public void setErrorCode(int errorCode) {
+        this.errorCode = errorCode;
+    }
+
+    /**
+     * @return the tinestamp
+     */
+    public Date getTinestamp() {
+        return tinestamp;
+    }
+
+    /**
+     * @param tinestamp the tinestamp to set
+     */
+    public void setTinestamp(Date tinestamp) {
+        this.tinestamp = tinestamp;
     }
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-
-        for (CycleTimeEntry ct : entries) {
-            if (ct == null) {
-                sb.append("ON --:-- OFF --:-- | ");
-            } else {
-                sb.append(String.format("ON %02d:%02d OFF %02d:%02d | ", ct.getStartHour(), ct.getStartMin(), ct.getEndHour(), ct.getEndMin()));
-            }
-        }
-        sb.delete(sb.lastIndexOf(" | "), sb.length());
-        return sb.toString();
+        return String.format("%02x  %s", errorCode & 0xFF, tinestamp.toString());
     }
 
-    public void setEntry(int i, CycleTimeEntry entry) {
-        entries[i] = entry;
-    }
-
-    public CycleTimeEntry getEntry(int i) {
-        return entries[i];
-    }
-
-    //TODO parse String....
+    //TODO parse String
 }

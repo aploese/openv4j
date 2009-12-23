@@ -90,15 +90,15 @@ public class SegmentedDataContainerTest {
         System.out.println("addToReadOut");
         instance.setSegmentSize(16);
 
-        for (int i : DataPoint.BLOCKS) {
+        for (int i : DataPoint.BLOCKS_16) {
             instance.addToDataContainer(i, 16);
         }
 
-        assertEquals(DataPoint.BLOCKS.length, instance.getDataBlockCount());
+        assertEquals(DataPoint.BLOCKS_16.length, instance.getDataBlockCount());
 
         int i = 0;
 
-        for (int addr : DataPoint.BLOCKS) {
+        for (int addr : DataPoint.BLOCKS_16) {
             assertEquals("Index: " + i, addr, instance.getDataBlock(i).getBaseAddress());
             i++;
         }

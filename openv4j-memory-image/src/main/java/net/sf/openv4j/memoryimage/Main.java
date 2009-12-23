@@ -24,11 +24,16 @@
  */
 package net.sf.openv4j.memoryimage;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import java.util.Properties;
-
-import org.apache.log4j.PropertyConfigurator;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.Option;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
+import org.apache.commons.cli.PosixParser;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,11 +42,20 @@ import gnu.io.NoSuchPortException;
 import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
 import gnu.io.UnsupportedCommOperationException;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.Date;
 
 import net.sf.openv4j.DataPoint;
 import net.sf.openv4j.protocolhandlers.DataContainer;
 import net.sf.openv4j.protocolhandlers.ProtocolHandler;
 import net.sf.openv4j.protocolhandlers.SegmentedDataContainer;
+import org.apache.commons.cli.OptionGroup;
 
 /**
  * DOCUMENT ME!
@@ -49,12 +63,8 @@ import net.sf.openv4j.protocolhandlers.SegmentedDataContainer;
  * @author aploese
  */
 public class Main {
-    private static Logger log;
 
-    static {
-        Main.LogInit.initLog(Main.LogInit.INFO);
-        log = LoggerFactory.getLogger(Main.class);
-    }
+    private static Logger log = LoggerFactory.getLogger(Main.class);
 
     /**
      * Creates a new Main object.
@@ -68,24 +78,14 @@ public class Main {
      *
      * @param args DOCUMENT ME!
      */
-    public static void main(String[] args) {
-        if (args.length > 0) {
-            log.info("Will open SerialPort: " + args[0]);
-        } else {
-            log.info("no Port given, will shut down");
-
-            return;
-        }
-
+    public static void run(String port, final DataContainer dc) {
         SerialPort masterPort = null;
         Main expl = new Main();
         ProtocolHandler protocolHandler = new ProtocolHandler();
 
         try {
-            if (args.length > 0) {
-                masterPort = ProtocolHandler.openPort(args[0]);
-                protocolHandler.setStreams(masterPort.getInputStream(), masterPort.getOutputStream());
-            }
+            masterPort = ProtocolHandler.openPort(port);
+            protocolHandler.setStreams(masterPort.getInputStream(), masterPort.getOutputStream());
         } catch (NoSuchPortException ex) {
             log.error(ex.getMessage(), ex);
         } catch (PortInUseException ex) {
@@ -97,69 +97,12 @@ public class Main {
         }
 
         try {
-            DataContainer container = new SegmentedDataContainer();
+            protocolHandler.setReadRequest(dc);
 
-            for (DataPoint dp : DataPoint.values()) {
-                container.addToDataContainer(dp);
+            synchronized (dc) {
+                dc.wait(dc.getDataBlockCount() * 60000);
             }
 
-            /*
-               for (int i = 0; i < DataPoint.BLOCKS.length; i ++) {
-               container.addToDataContainer(DataPoint.BLOCKS[i], 16);
-               }
-               /*            for (int i = 0x0000; i < 0x00FFFF; i += DataContainer.DEFAULT_SEGMENT_SIZE) {
-               container.addToDataContainer(i, DataContainer.DEFAULT_SEGMENT_SIZE);
-               }
-             */
-            protocolHandler.setReadRequest(container);
-
-            synchronized (container) {
-                container.wait(container.getDataBlockCount() * 60000);
-            }
-
-            log.info("MEMORY MAP:\n" + container.toString());
-            log.info("DATAPOINTS:\n" + DataPoint.printAll(container));
-
-            StringBuilder sb = new StringBuilder();
-            sb.append("ADRESSES WITH SAME DATA:\n");
-
-            for (DataPoint p : DataPoint.values()) {
-                switch (p.getValueKind()) {
-                    case TEMP_ACTUAL:
-                    case TEMP_DAMPED:
-                    case TEMP_LOW_PASS:
-                    case TEMP_NOMINAL:
-                    case TEMP_PARTY:
-                    case TEMP_REDUCED:
-                    case CONSUPTION:
-                    case CYCLES:
-                    case POSITION_IN_PERCENT:
-                    case POWER_IN_PERCENT:
-                    case ENERGY_KWH:
-                    case TEMP_MAX:
-                    case CONFIG:
-
-                        Object o = p.decode(container);
-
-                        if (o instanceof Double) {
-                            if (Double.compare(-1.0, (Double) o) == 0) {
-                            } else {
-                                DataPoint.printMatchingAddesses(p, container, sb);
-                            }
-                        } else {
-                            DataPoint.printMatchingAddesses(p, container, sb);
-                        }
-
-                        break;
-
-                    default:
-
-                        //    DataPoint.printMatchingAddesses(p, container, sb);
-                        break;
-                }
-            }
-
-            log.info(sb.toString());
         } catch (Exception ex) {
             System.err.print("Error sleep " + ex);
         }
@@ -176,26 +119,145 @@ public class Main {
         }
     }
 
-    public static class LogInit {
-        public static final String TRACE = "trace";
-        public static final String DEBUG = "debug";
-        public static final String INFO = "info";
-        public static final String WARN = "warn";
-        public static final String ERROR = "error";
-        public static final String FATAL = "fatal";
+    private static void printHelp(Options opts) {
+        HelpFormatter formatter = new HelpFormatter();
+        formatter.setWidth(300);
+        formatter.printHelp("openv4j-memory-image", opts);
+    }
 
-        public static synchronized void initLog(String level) {
-            Properties props = new Properties();
-            props.setProperty("log4j.appender.stdout", "org.apache.log4j.ConsoleAppender");
-            props.setProperty("log4j.appender.stdout.Target", "System.out");
-            //log4j.appender.stdout=org.apache.log4j.FileAppender
-            //log4j.appender.stdout.File=Easy.log
-            props.setProperty("log4j.appender.stdout.layout", "org.apache.log4j.PatternLayout");
-            props.setProperty("log4j.appender.stdout.layout.ConversionPattern", "%d{ABSOLUTE} %5p %c{1}: %m%n");
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) throws FileNotFoundException, IOException {
 
-            //set log levels - for more verbose logging change 'info' to 'debug' ###
-            props.setProperty("log4j.rootLogger", level + ", stdout");
-            PropertyConfigurator.configure(props);
+        Options options = new Options();
+        Option opt;
+        OptionGroup optg;
+
+        opt = new Option("h", "help", false, "print this help message");
+        options.addOption(opt);
+
+        optg = new OptionGroup();
+        optg.setRequired(true);
+
+        opt = new Option("p", "port", true, "serial port to use");
+        opt.setArgName("port");
+        opt.setType(String.class);
+        optg.addOption(opt);
+
+        opt = new Option("r", "reevaluate-file", true, "reevaluate memory image file");
+        opt.setArgName("reevaluateImage");
+        opt.setType(String.class);
+        optg.addOption(opt);
+
+
+        options.addOptionGroup(optg);
+
+        opt = new Option("s", "segment-size", true, "segment-size default " + SegmentedDataContainer.DEFAULT_SEGMENT_SIZE);
+        opt.setArgName("segmentSize");
+        opt.setType(Integer.class);
+        options.addOption(opt);
+
+        optg = new OptionGroup();
+        optg.setRequired(true);
+
+        opt = new Option("a", "all-known-blocks", false, "fetch all known 16 Byte blocks wich are different from 0xFF");
+        opt.setArgName("allBlocks");
+        optg.addOption(opt);
+
+        opt = new Option("d", "all-data-points", false, "fetch all known datapoints");
+        opt.setArgName("allDataPoints");
+        optg.addOption(opt);
+
+        options.addOptionGroup(optg);
+        opt = null;
+        optg = null;
+
+        CommandLineParser parser = new PosixParser();
+        CommandLine cmd = null;
+        try {
+            cmd = parser.parse(options, args);
+        } catch (ParseException ex) {
+            printHelp(options);
+            return;
+        }
+
+        if (cmd.hasOption("help")) {
+            printHelp(options);
+            return;
+        }
+
+        DataContainer container;
+
+        if (cmd.hasOption("reevaluate-file")) {
+            container = new SegmentedDataContainer(Integer.parseInt(cmd.getOptionValue("segment-size", String.valueOf(SegmentedDataContainer.DEFAULT_SEGMENT_SIZE))));
+            extractMemoryImage(new FileInputStream(cmd.getOptionValue("reevaluate-file")), container);
+        } else {
+
+            container = new SegmentedDataContainer(Integer.parseInt(cmd.getOptionValue("segment-size", String.valueOf(SegmentedDataContainer.DEFAULT_SEGMENT_SIZE))));
+            if (cmd.hasOption("all-known-blocks")) {
+                for (int address : DataPoint.BLOCKS_16) {
+                    container.addToDataContainer(address, 16);
+                }
+            } else if (cmd.hasOption("all-data-points")) {
+                for (DataPoint dp : DataPoint.values()) {
+                    container.addToDataContainer(dp);
+                }
+            }
+        }
+
+            Date startTime = new Date();
+        String outName;
+        if (cmd.hasOption("reevaluate-file")) {
+            outName = cmd.getOptionValue("reevaluate-file");
+        } else {
+            run(cmd.getOptionValue("port"), container);
+            outName = String.format("mem-image_%1$tY%1$tm%1$td_%1$tH%1$tM%1$tS.txt", startTime);
+        }
+
+        System.out.println("Data Points:");
+        StringBuilder sb = new StringBuilder();
+        DataPoint.printAll(sb, container);
+        System.out.append(sb.toString());
+        sb = null;
+
+        FileOutputStream fos = new FileOutputStream(outName);
+        sb = new StringBuilder();
+        sb.append("Memory Image: {\n");
+        sb.append(container.toString());
+        sb.append("\n}");
+        sb.append("\nProperties By Address: {\n");
+        DataPoint.printAddresses(sb, container);
+        sb.append("}");
+        sb.append("\nProperties By Group: {\n");
+        DataPoint.printAll(sb, container);
+        sb.append("}");
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
+        bw.write(sb.toString());
+        bw.flush();
+        bw.close();
+        fos.flush();
+        fos.close();
+
+    }
+
+    private static void extractMemoryImage(InputStream is, DataContainer container) throws IOException {
+        boolean isMemoryImage = false;
+        BufferedReader br = new BufferedReader(new InputStreamReader(is));
+        String line;
+
+        while ((line = br.readLine()) != null) {
+            if (!isMemoryImage) {
+                if ("Memory Image: {".equals(line)) {
+                    isMemoryImage = true;
+                }
+            } else {
+                if ("}".equals(line)) {
+                    return;
+                } else {
+                    container.addMemoryImageLine(line);
+                }
+            }
         }
     }
 }

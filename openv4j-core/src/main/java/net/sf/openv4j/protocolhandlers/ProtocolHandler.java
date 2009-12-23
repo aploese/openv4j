@@ -236,6 +236,9 @@ public class ProtocolHandler {
             received = new byte[length];
             bytesLeft = received.length;
             setState(State.KW_WAIT_FOR_READ_RESP);
+            if (log.isDebugEnabled()) {
+                log.debug(String.format("Send readPackage @0x%04x %d", address, length));
+            }
         }
 
         public void setReadRequest(DataContainer container) {
@@ -291,6 +294,9 @@ public class ProtocolHandler {
                 received[received.length - bytesLeft--] = (byte) theData;
 
                 if (bytesLeft == 0) {
+                    if (log.isDebugEnabled()) {
+                        log.debug(String.format("Data received: [%s]", toHexASCII(received)));
+                    }
                     currentDataBlock.setBytesAtPos(0, received);
 
                     if ((currentIndex + 1) < container.getDataBlockCount()) {
@@ -356,7 +362,10 @@ public class ProtocolHandler {
             received = new byte[1];
             bytesLeft = received.length;
             setState(State.KW_WAIT_FOR_WRITE_RESP);
-        }
+             if (log.isDebugEnabled()) {
+                log.debug(String.format("Send writePackage @0x%04x [%s]", address, toHexASCII(theData)));
+            }
+       }
 
         private void setCurrentIndex(int currentIndex) {
             this.currentIndex = currentIndex;
@@ -368,6 +377,17 @@ public class ProtocolHandler {
             this.state = state;
         }
     }
+
+        public static String toHexASCII(byte[] theData) {
+            StringBuilder sb = new StringBuilder(theData.length * 3);
+            for (int i: theData) {
+                sb.append(String.format("%02x ", i & 0xff));
+            }
+            if (sb.length() > 0) {
+                sb.deleteCharAt(sb.length() -1);
+            }
+            return sb.toString();
+        }
 
     enum State {KW_IDLE,
         KW_WAIT_FOR_READ_RDY,

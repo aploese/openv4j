@@ -25,40 +25,70 @@
 package net.sf.openv4j;
 
 /**
- * DOCUMENT ME!
  *
  * @author aploese
  */
-public class CycleTimes {
-
-    private CycleTimeEntry[] entries;
-
-    public CycleTimes(int numberOfCycles) {
-        entries = new CycleTimeEntry[numberOfCycles];
+public class CycleTimeEntry {
+    private int endHour;
+    private int endMin;
+    private int startHour;
+    private int startMin;
+    /**
+     * DOCUMENT ME!
+     *
+     * @return the endHour
+     */
+    public int getEndHour() {
+        return endHour;
     }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-
-        for (CycleTimeEntry ct : entries) {
-            if (ct == null) {
-                sb.append("ON --:-- OFF --:-- | ");
-            } else {
-                sb.append(String.format("ON %02d:%02d OFF %02d:%02d | ", ct.getStartHour(), ct.getStartMin(), ct.getEndHour(), ct.getEndMin()));
-            }
-        }
-        sb.delete(sb.lastIndexOf(" | "), sb.length());
-        return sb.toString();
+    /**
+     * DOCUMENT ME!
+     *
+     * @return the endMin
+     */
+    public int getEndMin() {
+        return endMin;
     }
 
-    public void setEntry(int i, CycleTimeEntry entry) {
-        entries[i] = entry;
+    /**
+     * DOCUMENT ME!
+     *
+     * @return the startHour
+     */
+    public int getStartHour() {
+        return startHour;
     }
 
-    public CycleTimeEntry getEntry(int i) {
-        return entries[i];
+    /**
+     * DOCUMENT ME!
+     *
+     * @return the startMin
+     */
+    public int getStartMin() {
+        return startMin;
     }
 
-    //TODO parse String....
+    /**
+     * DOCUMENT ME!
+     *
+     * @param h DOCUMENT ME!
+     * @param min DOCUMENT ME!
+     */
+    public void setEnd(int h, int min) {
+        endHour = h;
+        endMin = min;
+    }
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @param h DOCUMENT ME!
+     * @param min DOCUMENT ME!
+     */
+    public void setStart(int h, int min) {
+        startHour = h;
+        startMin = min;
+    }
+
 }

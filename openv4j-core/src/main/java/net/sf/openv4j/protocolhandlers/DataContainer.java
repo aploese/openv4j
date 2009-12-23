@@ -24,6 +24,10 @@
  */
 package net.sf.openv4j.protocolhandlers;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,6 +43,7 @@ import net.sf.openv4j.DataPoint;
  * @author aploese
  */
 public abstract class DataContainer extends MemoryImage {
+
     private static Logger log = LoggerFactory.getLogger(DataContainer.class);
 
     /**
@@ -55,7 +60,6 @@ public abstract class DataContainer extends MemoryImage {
      * @param startAddress DOCUMENT ME!
      * @param data DOCUMENT ME!
      */
-
     //TODO What happend if 1 param is given?
     public abstract void addToDataContainer(int startAddress, int[] data);
 
@@ -97,6 +101,39 @@ public abstract class DataContainer extends MemoryImage {
      * @param dataPoint DOCUMENT ME!
      */
     public void addToDataContainer(DataPoint dataPoint) {
-        addToDataContainer(dataPoint.getAddress(), dataPoint.getLength());
+        addToDataContainer(dataPoint.getAddr(), dataPoint.getLength());
+    }
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @param in DOCUMENT ME!
+     *
+     * @throws IOException DOCUMENT ME!
+     */
+    public void readFromStream(InputStream in) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(in));
+        String line;
+
+        while ((line = br.readLine()) != null) {
+            addMemoryImageLine(line);
+        }
+    }
+
+    public void addMemoryImageLine(String line) {
+        String[] splitted = line.split(" ");
+        int address = -1;
+
+        for (int i = 0; i < splitted.length; i++) {
+            if (i == 0) {
+                address = Integer.parseInt(splitted[0], 16);
+                addToDataContainer(address, 16);
+            } else {
+                if ((splitted[i].length() != 0) && (!"|".equals(splitted[i]))) {
+                    setByte(address, (byte) Integer.parseInt(splitted[i], 16));
+                    address++;
+                }
+            }
+        }
     }
 }

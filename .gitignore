@@ -3,3 +3,4 @@ openv4j-memory-image/target/
 openv4j-swing-gui/target/
 openv4j-test-device/target/
 target/
+*/nbactions.xml

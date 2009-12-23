@@ -26,7 +26,7 @@ package net.sf.openv4j;
 
 /**
  *
- * @author aploese
+ * @author arnep
  */
 public interface Alternative {
 }

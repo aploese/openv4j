@@ -165,7 +165,7 @@ public class KW2Dummy extends MemoryImage {
      */
     @Override
     protected int getByte(int address) {
-        return memMap[address];
+        return memMap[address] & 0x000000FF;
     }
 
     class KW2Encoder {

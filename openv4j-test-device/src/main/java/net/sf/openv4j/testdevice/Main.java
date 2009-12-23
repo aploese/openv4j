@@ -28,16 +28,20 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.util.Properties;
-
-import org.apache.log4j.PropertyConfigurator;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import gnu.io.NoSuchPortException;
 import gnu.io.PortInUseException;
 import gnu.io.UnsupportedCommOperationException;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.Option;
+import org.apache.commons.cli.OptionGroup;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
+import org.apache.commons.cli.PosixParser;
 
 /**
  * DOCUMENT ME!
@@ -45,7 +49,7 @@ import gnu.io.UnsupportedCommOperationException;
  * @author aploese
  */
 public class Main {
-    private static Logger log;
+    private static Logger log = LoggerFactory.getLogger(Main.class);
     private final KW2Dummy kwDummy;
 
     /**
@@ -73,14 +77,13 @@ public class Main {
      *
      * @throws Exception DOCUMENT ME!
      */
-    public static void main(String[] args) throws Exception {
-        Main.LogInit.initLog(Main.LogInit.INFO);
-
+    public static void run(String port, InputStream is) throws Exception {
+ 
         final Main device = new Main();
 
         try {
-            device.readFromStream(new FileInputStream(args[1]));
-            device.openPort(args[0]);
+            device.readFromStream(is);
+            device.openPort(port);
             System.out.print("Press any key to quit!");
             System.in.read();
         } finally {
@@ -98,26 +101,58 @@ public class Main {
         kwDummy.readFromStream(is);
     }
 
-    public static class LogInit {
-        public static final String TRACE = "trace";
-        public static final String DEBUG = "debug";
-        public static final String INFO = "info";
-        public static final String WARN = "warn";
-        public static final String ERROR = "error";
-        public static final String FATAL = "fatal";
 
-        public static synchronized void initLog(String level) {
-            Properties props = new Properties();
-            props.setProperty("log4j.appender.stdout", "org.apache.log4j.ConsoleAppender");
-            props.setProperty("log4j.appender.stdout.Target", "System.out");
-            //log4j.appender.stdout=org.apache.log4j.FileAppender
-            //log4j.appender.stdout.File=Easy.log
-            props.setProperty("log4j.appender.stdout.layout", "org.apache.log4j.PatternLayout");
-            props.setProperty("log4j.appender.stdout.layout.ConversionPattern", "%d{ABSOLUTE} %5p %c{1}: %m%n");
-
-            //set log levels - for more verbose logging change 'info' to 'debug' ###
-            props.setProperty("log4j.rootLogger", level + ", stdout");
-            PropertyConfigurator.configure(props);
-        }
+        private static void printHelp(Options opts) {
+        HelpFormatter formatter = new HelpFormatter();
+        formatter.setWidth(300);
+        formatter.printHelp("openv4j-memory-image", opts);
     }
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) throws Exception {
+
+        Options options = new Options();
+
+        Option helpOpt = new Option("h", "help", false, "print this help message");
+        options.addOption(helpOpt);
+
+        Option portOpt = new Option("p", "port", true, "serial port to use");
+        portOpt.setArgName("port");
+        portOpt.setType(String.class);
+        portOpt.setRequired(true);
+        options.addOption(portOpt);
+
+        OptionGroup memMapOptionGroup = new OptionGroup();
+        memMapOptionGroup.setRequired(true);
+
+        Option fileMemMapOpt = new Option("f", "file", true, "read from File");
+        fileMemMapOpt.setArgName("mem map file name");
+        portOpt.setType(String.class);
+        memMapOptionGroup.addOption(fileMemMapOpt);
+
+        options.addOptionGroup(memMapOptionGroup);
+        CommandLineParser parser = new PosixParser();
+        CommandLine cmd = null;
+        try {
+            cmd = parser.parse(options, args);
+        } catch (ParseException ex) {
+            printHelp(options);
+            return;
+        }
+
+        if (cmd.hasOption('h')) {
+            printHelp(options);
+            return;
+        }
+
+        InputStream is = null;
+        if (cmd.hasOption('f')) {
+            is = new FileInputStream(cmd.getOptionValue('f'));
+        }
+
+        run(cmd.getOptionValue('p'), is);
+    }
+
 }

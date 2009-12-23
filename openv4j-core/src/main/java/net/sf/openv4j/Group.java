@@ -32,9 +32,12 @@ import java.io.Serializable;
 public enum Group implements Serializable {COMMON("Common"),
     BOILER("Boiler"),
     DHW("DHW"),
-    M1("M1"),
+    A1M1("A1M1"),
+    DHW_A1M1("DHW A1M1"),
     M2("M2"),
+    DHW_M2("DHW M2"),
     M3("M3"),
+    DHW_M3("DHW M3"),
     SOLAR("Solar");
 
     private final String label;

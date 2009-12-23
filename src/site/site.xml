@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <project>
+    <poweredBy>
+    <logo name="Maven" href="http://maven.apache.org/"
+          img="http://maven.apache.org/images/logos/maven-feather.png"/>
+  </poweredBy>
     <version />
     <bannerLeft>
         <name>OpenV4J</name>
@@ -11,15 +15,18 @@
     </bannerRight>
     <body>
         <links>
+            <item name="OpenV Wiki" href="http://openv.wikispaces.com"/>
             <item name="Mango Open Source M2M" href="http://mango.serotoninsoftware.com"/>
-            <item name="OpenV4J Core" href="http://openv4j.sf.net/openv4j-core"/>
-            <item name="OpenV4J Memory Image" href="http://openv4j.sf.net/openv4j-memory-image"/>
-            <item name="OpenV4J Test Device" href="http://openv4j.sf.net/openv4j-test-device"/>
         </links>
-        <menu name="OPenV4J">
-            <item name="Introduction" href="index.html"/>
+        <menu name="OpenV4J">
+            <item name="Introduction" href="/index.html"/>
         </menu>
+         <menu ref="modules" />
+
+        <menu ref="parent" inherit="top"/>
+        <!-- not working menu ref="modules"/-->
         <menu name="Sub Projects">
+            <item name="OpenV4J Core" href="openv4j-core/index.html"/>
             <item name="OpenV4J Memory Image" href="openv4j-memory-image/index.html"/>
             <item name="OpenV4J Test Device" href="openv4j-test-device/index.html"/>
         </menu>

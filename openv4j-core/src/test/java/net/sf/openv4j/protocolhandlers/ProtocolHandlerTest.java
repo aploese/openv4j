@@ -103,7 +103,7 @@ public class ProtocolHandlerTest {
 
         DataContainer container = new SegmentedDataContainer(16);
 
-        for (int i : DataPoint.BLOCKS) {
+        for (int i : DataPoint.BLOCKS_16) {
             container.addToDataContainer(i, 16);
         }
 
