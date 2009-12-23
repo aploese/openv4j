@@ -24,13 +24,23 @@
  */
 package net.sf.openv4j.memoryimage;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
+import java.util.Date;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
+import org.apache.commons.cli.OptionGroup;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
@@ -42,20 +52,11 @@ import gnu.io.NoSuchPortException;
 import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
 import gnu.io.UnsupportedCommOperationException;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.util.Date;
 
 import net.sf.openv4j.DataPoint;
 import net.sf.openv4j.protocolhandlers.DataContainer;
 import net.sf.openv4j.protocolhandlers.ProtocolHandler;
 import net.sf.openv4j.protocolhandlers.SegmentedDataContainer;
-import org.apache.commons.cli.OptionGroup;
 
 /**
  * DOCUMENT ME!
@@ -63,7 +64,6 @@ import org.apache.commons.cli.OptionGroup;
  * @author aploese
  */
 public class Main {
-
     private static Logger log = LoggerFactory.getLogger(Main.class);
 
     /**
@@ -74,62 +74,15 @@ public class Main {
     }
 
     /**
-     * DOCUMENT ME!
+     * 
+    DOCUMENT ME!
      *
-     * @param args DOCUMENT ME!
-     */
-    public static void run(String port, final DataContainer dc) {
-        SerialPort masterPort = null;
-        Main expl = new Main();
-        ProtocolHandler protocolHandler = new ProtocolHandler();
-
-        try {
-            masterPort = ProtocolHandler.openPort(port);
-            protocolHandler.setStreams(masterPort.getInputStream(), masterPort.getOutputStream());
-        } catch (NoSuchPortException ex) {
-            log.error(ex.getMessage(), ex);
-        } catch (PortInUseException ex) {
-            log.error(ex.getMessage(), ex);
-        } catch (UnsupportedCommOperationException ex) {
-            log.error(ex.getMessage(), ex);
-        } catch (IOException ex) {
-            log.error(ex.getMessage(), ex);
-        }
-
-        try {
-            protocolHandler.setReadRequest(dc);
-
-            synchronized (dc) {
-                dc.wait(dc.getDataBlockCount() * 60000);
-            }
-
-        } catch (Exception ex) {
-            System.err.print("Error sleep " + ex);
-        }
-
-        try {
-            System.out.println("CLOSE");
-            protocolHandler.close();
-        } catch (InterruptedException ex) {
-            log.error(ex.getMessage(), ex);
-        }
-
-        if (masterPort != null) {
-            masterPort.close();
-        }
-    }
-
-    private static void printHelp(Options opts) {
-        HelpFormatter formatter = new HelpFormatter();
-        formatter.setWidth(300);
-        formatter.printHelp("openv4j-memory-image", opts);
-    }
-
-    /**
      * @param args the command line arguments
+     *
+     * @throws FileNotFoundException DOCUMENT ME!
+     * @throws IOException DOCUMENT ME!
      */
     public static void main(String[] args) throws FileNotFoundException, IOException {
-
         Options options = new Options();
         Option opt;
         OptionGroup optg;
@@ -149,7 +102,6 @@ public class Main {
         opt.setArgName("reevaluateImage");
         opt.setType(String.class);
         optg.addOption(opt);
-
 
         options.addOptionGroup(optg);
 
@@ -175,15 +127,18 @@ public class Main {
 
         CommandLineParser parser = new PosixParser();
         CommandLine cmd = null;
+
         try {
             cmd = parser.parse(options, args);
         } catch (ParseException ex) {
             printHelp(options);
+
             return;
         }
 
         if (cmd.hasOption("help")) {
             printHelp(options);
+
             return;
         }
 
@@ -193,8 +148,8 @@ public class Main {
             container = new SegmentedDataContainer(Integer.parseInt(cmd.getOptionValue("segment-size", String.valueOf(SegmentedDataContainer.DEFAULT_SEGMENT_SIZE))));
             extractMemoryImage(new FileInputStream(cmd.getOptionValue("reevaluate-file")), container);
         } else {
-
             container = new SegmentedDataContainer(Integer.parseInt(cmd.getOptionValue("segment-size", String.valueOf(SegmentedDataContainer.DEFAULT_SEGMENT_SIZE))));
+
             if (cmd.hasOption("all-known-blocks")) {
                 for (int address : DataPoint.BLOCKS_16) {
                     container.addToDataContainer(address, 16);
@@ -206,8 +161,9 @@ public class Main {
             }
         }
 
-            Date startTime = new Date();
+        Date startTime = new Date();
         String outName;
+
         if (cmd.hasOption("reevaluate-file")) {
             outName = cmd.getOptionValue("reevaluate-file");
         } else {
@@ -216,6 +172,7 @@ public class Main {
         }
 
         System.out.println("Data Points:");
+
         StringBuilder sb = new StringBuilder();
         DataPoint.printAll(sb, container);
         System.out.append(sb.toString());
@@ -232,16 +189,63 @@ public class Main {
         sb.append("\nProperties By Group: {\n");
         DataPoint.printAll(sb, container);
         sb.append("}");
+
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
         bw.write(sb.toString());
         bw.flush();
         bw.close();
         fos.flush();
         fos.close();
-
     }
 
-    private static void extractMemoryImage(InputStream is, DataContainer container) throws IOException {
+    /**
+     * DOCUMENT ME!
+     *
+     * @param port DOCUMENT ME!
+     * @param dc DOCUMENT ME!
+     */
+    public static void run(String port, final DataContainer dc) {
+        SerialPort masterPort = null;
+        Main expl = new Main();
+        ProtocolHandler protocolHandler = new ProtocolHandler();
+
+        try {
+            masterPort = ProtocolHandler.openPort(port);
+            protocolHandler.setStreams(masterPort.getInputStream(), masterPort.getOutputStream());
+        } catch (NoSuchPortException ex) {
+            log.error(ex.getMessage(), ex);
+        } catch (PortInUseException ex) {
+            log.error(ex.getMessage(), ex);
+        } catch (UnsupportedCommOperationException ex) {
+            log.error(ex.getMessage(), ex);
+        } catch (IOException ex) {
+            log.error(ex.getMessage(), ex);
+        }
+
+        try {
+            protocolHandler.setReadRequest(dc);
+
+            synchronized (dc) {
+                dc.wait(dc.getDataBlockCount() * 60000);
+            }
+        } catch (Exception ex) {
+            System.err.print("Error sleep " + ex);
+        }
+
+        try {
+            System.out.println("CLOSE");
+            protocolHandler.close();
+        } catch (InterruptedException ex) {
+            log.error(ex.getMessage(), ex);
+        }
+
+        if (masterPort != null) {
+            masterPort.close();
+        }
+    }
+
+    private static void extractMemoryImage(InputStream is, DataContainer container)
+                                    throws IOException {
         boolean isMemoryImage = false;
         BufferedReader br = new BufferedReader(new InputStreamReader(is));
         String line;
@@ -259,5 +263,11 @@ public class Main {
                 }
             }
         }
+    }
+
+    private static void printHelp(Options opts) {
+        HelpFormatter formatter = new HelpFormatter();
+        formatter.setWidth(300);
+        formatter.printHelp("openv4j-memory-image", opts);
     }
 }

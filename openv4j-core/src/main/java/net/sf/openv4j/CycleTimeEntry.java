@@ -25,6 +25,8 @@
 package net.sf.openv4j;
 
 /**
+ * 
+DOCUMENT ME!
  *
  * @author aploese
  */
@@ -33,6 +35,7 @@ public class CycleTimeEntry {
     private int endMin;
     private int startHour;
     private int startMin;
+
     /**
      * DOCUMENT ME!
      *
@@ -90,5 +93,4 @@ public class CycleTimeEntry {
         startHour = h;
         startMin = min;
     }
-
 }

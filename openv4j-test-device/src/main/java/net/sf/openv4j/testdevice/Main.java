@@ -28,12 +28,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import gnu.io.NoSuchPortException;
-import gnu.io.PortInUseException;
-import gnu.io.UnsupportedCommOperationException;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.HelpFormatter;
@@ -42,6 +36,13 @@ import org.apache.commons.cli.OptionGroup;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import gnu.io.NoSuchPortException;
+import gnu.io.PortInUseException;
+import gnu.io.UnsupportedCommOperationException;
 
 /**
  * DOCUMENT ME!
@@ -71,48 +72,14 @@ public class Main {
     }
 
     /**
-     * DOCUMENT ME!
+     * 
+    DOCUMENT ME!
      *
-     * @param args DOCUMENT ME!
+     * @param args the command line arguments
      *
      * @throws Exception DOCUMENT ME!
      */
-    public static void run(String port, InputStream is) throws Exception {
- 
-        final Main device = new Main();
-
-        try {
-            device.readFromStream(is);
-            device.openPort(port);
-            System.out.print("Press any key to quit!");
-            System.in.read();
-        } finally {
-            device.close();
-        }
-
-        log.info("Ende");
-    }
-
-    private void openPort(String serialPortName) throws IOException, NoSuchPortException, PortInUseException, UnsupportedCommOperationException {
-        kwDummy.openPort(serialPortName);
-    }
-
-    private void readFromStream(InputStream is) throws IOException {
-        kwDummy.readFromStream(is);
-    }
-
-
-        private static void printHelp(Options opts) {
-        HelpFormatter formatter = new HelpFormatter();
-        formatter.setWidth(300);
-        formatter.printHelp("openv4j-memory-image", opts);
-    }
-
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) throws Exception {
-
         Options options = new Options();
 
         Option helpOpt = new Option("h", "help", false, "print this help message");
@@ -133,21 +100,26 @@ public class Main {
         memMapOptionGroup.addOption(fileMemMapOpt);
 
         options.addOptionGroup(memMapOptionGroup);
+
         CommandLineParser parser = new PosixParser();
         CommandLine cmd = null;
+
         try {
             cmd = parser.parse(options, args);
         } catch (ParseException ex) {
             printHelp(options);
+
             return;
         }
 
         if (cmd.hasOption('h')) {
             printHelp(options);
+
             return;
         }
 
         InputStream is = null;
+
         if (cmd.hasOption('f')) {
             is = new FileInputStream(cmd.getOptionValue('f'));
         }
@@ -155,4 +127,41 @@ public class Main {
         run(cmd.getOptionValue('p'), is);
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @param port DOCUMENT ME!
+     * @param is DOCUMENT ME!
+     *
+     * @throws Exception DOCUMENT ME!
+     */
+    public static void run(String port, InputStream is)
+                    throws Exception {
+        final Main device = new Main();
+
+        try {
+            device.readFromStream(is);
+            device.openPort(port);
+            System.out.print("Press any key to quit!");
+            System.in.read();
+        } finally {
+            device.close();
+        }
+
+        log.info("Ende");
+    }
+
+    private void openPort(String serialPortName) throws IOException, NoSuchPortException, PortInUseException, UnsupportedCommOperationException {
+        kwDummy.openPort(serialPortName);
+    }
+
+    private static void printHelp(Options opts) {
+        HelpFormatter formatter = new HelpFormatter();
+        formatter.setWidth(300);
+        formatter.printHelp("openv4j-memory-image", opts);
+    }
+
+    private void readFromStream(InputStream is) throws IOException {
+        kwDummy.readFromStream(is);
+    }
 }

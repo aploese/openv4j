@@ -60,5 +60,4 @@ public class Device {
     protected void mySetUp() throws Exception {
         container = new SegmentedDataContainer();
     }
-
 }

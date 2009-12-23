@@ -36,7 +36,6 @@ public enum Property implements Serializable {UNKNOWN("Unknown"),
     BURNER_STAGE_2("Burner stage 2"),
     BURNER_STAGES("Burner stages"),
     BURNER("burner"),
-
     OUTSIDE("Outside"),
     BOILER("Boiler"),
     DHW_CYLINDER("DHW cylinder"),

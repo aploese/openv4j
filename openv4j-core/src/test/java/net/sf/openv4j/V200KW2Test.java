@@ -96,7 +96,7 @@ public class V200KW2Test extends Device {
         StringBuilder sb = new StringBuilder();
 
         DataPoint.printAddresses(sb, container);
-        
+
         System.err.print(sb.toString());
     }
 
@@ -145,6 +145,7 @@ public class V200KW2Test extends Device {
         container.readFromStream(KW2Dummy.class.getResourceAsStream("V200KW2-MemMap.txt"));
 
         System.err.println(container.toString());
+
         StringBuilder sb = new StringBuilder();
         DataPoint.printAll(sb, container);
         System.err.println(sb.toString());

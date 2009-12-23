@@ -26,8 +26,8 @@ package net.sf.openv4j.protocolhandlers;
 
 import java.util.Calendar;
 import java.util.Date;
-import net.sf.openv4j.CycleTimeEntry;
 
+import net.sf.openv4j.CycleTimeEntry;
 import net.sf.openv4j.CycleTimes;
 
 /**
@@ -59,14 +59,14 @@ public abstract class MemoryImage {
      * DOCUMENT ME!
      *
      * @param addr DOCUMENT ME!
-     * @param numberOfCycles DOCUMENT ME!
+     * @param numberOfCycleTimes DOCUMENT ME!
      *
      * @return DOCUMENT ME!
      */
     public CycleTimes getCycleTimes(int addr, int numberOfCycleTimes) {
         CycleTimes result = new CycleTimes(numberOfCycleTimes / 2);
 
-        for (int i = 0; i < numberOfCycleTimes / 2; i++) {
+        for (int i = 0; i < (numberOfCycleTimes / 2); i++) {
             int dataByte = getByte(addr + (i * 2));
 
             if (dataByte == 0xff) {
@@ -80,6 +80,17 @@ public abstract class MemoryImage {
         }
 
         return result;
+    }
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @param addr DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
+    public ErrorListEntry getErrorListEntry(int addr) {
+        return new ErrorListEntry(getUInt1(addr), getTimeStamp_8(addr + 1));
     }
 
     /**
@@ -253,9 +264,5 @@ public abstract class MemoryImage {
 
     private int decodeBCD(int bcdByte) {
         return (bcdByte & 0x0F) | (((bcdByte & 0x00F0) >> 4) * 10);
-    }
-
-    public ErrorListEntry getErrorListEntry(int addr) {
-        return new ErrorListEntry(getUInt1(addr), getTimeStamp_8(addr + 1));
     }
 }
