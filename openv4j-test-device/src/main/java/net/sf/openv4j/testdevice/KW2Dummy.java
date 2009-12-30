@@ -158,7 +158,7 @@ public class KW2Dummy extends MemoryImage {
      * @param theData DOCUMENT ME!
      */
     @Override
-    public void setByte(int addr, byte theData) {
+    public void setRawByte(int addr, byte theData) {
         memMap[addr] = theData;
     }
 
@@ -191,8 +191,8 @@ public class KW2Dummy extends MemoryImage {
      * @return DOCUMENT ME!
      */
     @Override
-    protected int getByte(int address) {
-        return memMap[address];
+    public int getRawByte(int address) {
+        return memMap[address] & 0x00ff;
     }
 
     /**
@@ -322,7 +322,7 @@ public class KW2Dummy extends MemoryImage {
     private void appendDataPointValues(StringBuilder sb, int address, int lenght) {
         for (DataPoint dp : DataPoint.values()) {
             if ((dp.getAddr() >= address) && (dp.getAddr() < (address + lenght))) {
-                sb.append(String.format("\t@%04x %s:%s (%s)", dp.getAddr(), dp.getGroup().getLabel(), dp.getLabel(), dp.decode(KW2Dummy.this).toString()));
+                sb.append(String.format("\t@%04x %s:%s (%s)", dp.getAddr(), dp.getGroup().getLabel(), dp.getLabel(), dp.decode(KW2Dummy.this)));
             }
         }
     }

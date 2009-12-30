@@ -22,7 +22,7 @@
  *
  * @author arnep
  */
-package net.sf.openv4j.protocolhandlers;
+package net.sf.openv4j;
 
 import java.util.Date;
 
@@ -42,7 +42,7 @@ public class ErrorListEntry {
      * @param errorCode DOCUMENT ME!
      * @param timeStamp DOCUMENT ME!
      */
-    ErrorListEntry(int errorCode, Date timeStamp) {
+    public ErrorListEntry(int errorCode, Date timeStamp) {
         this.errorCode = errorCode;
         this.tinestamp = timeStamp;
     }

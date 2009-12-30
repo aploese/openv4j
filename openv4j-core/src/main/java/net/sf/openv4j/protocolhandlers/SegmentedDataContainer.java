@@ -170,7 +170,7 @@ public class SegmentedDataContainer extends DataContainer {
      * @param theData DOCUMENT ME!
      */
     @Override
-    public void setByte(int addr, byte theData) {
+    public void setRawByte(int addr, byte theData) {
         dataSegments[addr / segmentSize].setByteAtPos(addr % segmentSize, theData);
     }
 
@@ -225,13 +225,13 @@ public class SegmentedDataContainer extends DataContainer {
      * @return DOCUMENT ME!
      */
     @Override
-    protected int getByte(int address) {
+    public int getRawByte(int address) {
         final int baseIndex = address / segmentSize;
 
         if (dataSegments[baseIndex] == null) {
-            return 0xff;
+            return 0x00ff;
         } else {
-            return dataSegments[baseIndex].getByteAtPos(address % segmentSize);
+            return dataSegments[baseIndex].getByteAtPos(address % segmentSize) & 0x00ff;
         }
     }
 }

@@ -52,12 +52,17 @@ public class ProtocolHandler {
     private Thread t;
     private boolean closed;
 
+
+    public ProtocolHandler() {
+        super();
+    }
+
     /**
      * DOCUMENT ME!
      *
      * @throws InterruptedException DOCUMENT ME!
      */
-    public void close() throws InterruptedException {
+    public synchronized void close() throws InterruptedException {
         closed = true;
         Thread.sleep(100); //TODO wait?
         t.interrupt();
@@ -149,7 +154,7 @@ public class ProtocolHandler {
         return sb.toString();
     }
 
-    private void start() {
+    private synchronized void start() {
         closed = false;
         t = new Thread(streamListener);
         t.setDaemon(true);

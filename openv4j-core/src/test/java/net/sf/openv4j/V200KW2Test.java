@@ -49,9 +49,6 @@ public class V200KW2Test extends Device {
      */
     @BeforeClass
     public static void setUpClass() throws Exception {
-        InitLog.LogInit.initLog(InitLog.LogInit.INFO);
-
-        //                log = LoggerFactory.getLogger(PrintMemoryMap.class);
     }
 
     /**
@@ -118,8 +115,6 @@ public class V200KW2Test extends Device {
                 case TEMP_DAMPED:
                 case TEMP_LOW_PASS:
                 case TEMP_NOMINAL:
-                case TEMP_PARTY:
-                case TEMP_REDUCED:
                     DataPoint.printMatchingAddesses(p, container, sb);
 
                     break;

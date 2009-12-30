@@ -67,8 +67,8 @@ public class DataBlock {
         return baseAddress;
     }
 
-    public int getByteAtPos(int pos) {
-        return 0x00FF & data[pos];
+    public byte getByteAtPos(int pos) {
+        return data[pos];
     }
 
     public byte[] getBytes() {

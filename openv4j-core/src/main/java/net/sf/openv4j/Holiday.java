@@ -24,62 +24,77 @@
  */
 package net.sf.openv4j;
 
-import java.io.Serializable;
+import java.util.Date;
 
 /**
- * 
+ *
+ * @author aploese
  */
-public enum PropertyType implements Serializable {STATE("state"),
-    TEMP_ACTUAL("temp (a)[°C]"),
-    TEMP_NOMINAL("temp (n)[°C]"),
-    TEMP_LOW_PASS("temp (lp)[°C]"),
-    TEMP_DAMPED("temp (d)[°C]"),
-    TEMP_MAX("temp (max)[°C]"),
-    CYCLES("cycles"),
-    POWER_IN_PERCENT("power [%]"),
-    CONSUPTION("consuption [l|m³]"),
-    OPERATING_TIME_S("time [s]"),
-    OPERATING_TIME_H("time [h]"),
-    ENERGY_KWH("energy [kWh]"),
-    CYCLES_HEATING("heating cycles"),
-    CYCLES_RECIRC("recirc cycles"),
-    TIME_STAMP("time"),
-    POSITION_IN_PERCENT("position [%]"),
-    CONFIG("config "),
-    ERROR_STATE("error"),
-    ERROR("error");
+public class Holiday {
+    private Date start;
+    private Date end;
+    private byte startFlag;
+    private byte endFlag;
 
-    final String label;
-
-    private PropertyType(String label) {
-        this.label = label;
+    /**
+     * @return the start
+     */
+    public Date getStart() {
+        return start;
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
+     * @param start the start to set
      */
-    public String getName() {
-        return name();
+    public void setStart(Date start) {
+        this.start = start;
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
+     * @return the end
      */
-    public String getLabel() {
-        return label;
+    public Date getEnd() {
+        return end;
     }
 
     /**
-     * DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
+     * @param end the end to set
      */
+    public void setEnd(Date end) {
+        this.end = end;
+    }
+
+    /**
+     * @return the startFlag
+     */
+    public byte getStartFlag() {
+        return startFlag;
+    }
+
+    /**
+     * @return the endFlag
+     */
+    public byte getEndFlag() {
+        return endFlag;
+    }
+
     @Override
     public String toString() {
-        return label;
+        return String.format("%s : 0x%02x | %s : 0x%02x", start, startFlag, end, endFlag);
     }
+
+    /**
+     * @param startFlag the startFlag to set
+     */
+    public void setStartFlag(byte startFlag) {
+        this.startFlag = startFlag;
+    }
+
+    /**
+     * @param endFlag the endFlag to set
+     */
+    public void setEndFlag(byte endFlag) {
+        this.endFlag = endFlag;
+    }
+
 }

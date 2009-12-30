@@ -111,7 +111,7 @@ public abstract class DataContainer extends MemoryImage {
                 addToDataContainer(address, 16);
             } else {
                 if ((splitted[i].length() != 0) && (!"|".equals(splitted[i]))) {
-                    setByte(address, (byte) Integer.parseInt(splitted[i], 16));
+                    setRawByte(address, (byte) Integer.parseInt(splitted[i], 16));
                     address++;
                 }
             }

@@ -121,6 +121,10 @@ public class Main {
         opt.setArgName("allDataPoints");
         optg.addOption(opt);
 
+        opt = new Option("f", "full-scan", false, "fetch all 0x0000 to 0xffff");
+        opt.setArgName("complete memory map");
+        optg.addOption(opt);
+
         options.addOptionGroup(optg);
         opt = null;
         optg = null;
@@ -158,6 +162,8 @@ public class Main {
                 for (DataPoint dp : DataPoint.values()) {
                     container.addToDataContainer(dp);
                 }
+            } else if (cmd.hasOption("full-scan")) {
+                    container.addToDataContainer(0x0000, 0x010000);
             }
         }
 

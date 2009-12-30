@@ -30,13 +30,16 @@ import java.io.Serializable;
  * UINT LSB first HEX MSB first
  */
 public enum DataType implements Serializable {BOOL(1),
-    UINT_1(1),
-    UINT_2(2),
-    UINT_4(4),
-    HEX_2(2),
+    BYTE(1),
+    UBYTE(1),
+    SHORT(2),
+    USHORT(2),
+    INTEGER(4),
+    SHORT_HEX(2),
     TIME_STAMP_8(8),
     CYCLE_TIMES(8),
-    ERROR_LIST_ENTRY(9);
+    ERROR_LIST_ENTRY(9),
+    HOLIDAY(16);
 
     final int length;
 
