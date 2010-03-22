@@ -38,22 +38,33 @@
         </dependency>
     </dependencies>
 
-    <!--build>
-        <plugins>
-            <plugin>
-                <!- - mvn package appassembler:assemble - ->
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>appassembler-maven-plugin</artifactId>
-                <configuration>
-                    <programs>
-                        <program>
-                            <mainClass>net.sf.openv4j.testdevice.Main</mainClass>
-                            <name>test-device</name>
-                        </program>
-                    </programs>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build-->
+    <profiles>
+        <profile>
+            <id>release-sign-artifacts</id>
+            <activation>
+                <property>
+                    <name>performRelease</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <!-- mvn package appassembler:assemble -->
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>appassembler-maven-plugin</artifactId>
+                        <configuration>
+                            <programs>
+                                <program>
+                                    <mainClass>net.sf.openv4j.testdevice.Main</mainClass>
+                                    <name>test-device</name>
+                                </program>
+                            </programs>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
 </project>
