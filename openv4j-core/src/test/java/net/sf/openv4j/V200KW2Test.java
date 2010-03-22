@@ -94,7 +94,8 @@ public class V200KW2Test extends Device {
 
         DataPoint.printAddresses(sb, container);
 
-        System.err.print(sb.toString());
+        System.out.print(sb.toString());
+        System.out.println("PrintAddresses done");
     }
 
     /**
@@ -127,6 +128,7 @@ public class V200KW2Test extends Device {
         }
 
         //        System.err.print(sb.toString());
+        System.out.println("SearchAddresses done");
     }
 
     /**
@@ -139,10 +141,11 @@ public class V200KW2Test extends Device {
         System.out.println("All");
         container.readFromStream(KW2Dummy.class.getResourceAsStream("V200KW2-MemMap.txt"));
 
-        System.err.println(container.toString());
+        System.out.println(container.toString());
 
         StringBuilder sb = new StringBuilder();
         DataPoint.printAll(sb, container);
-        System.err.println(sb.toString());
+        System.out.println(sb.toString());
+        System.out.println("All done");
     }
 }

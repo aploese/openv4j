@@ -8,8 +8,7 @@
     <artifactId>openv4j-swing-gui</artifactId>
     <packaging>jar</packaging>
     <name>OpenV4J Swing GUI</name>
-    <url>http://net.sf.openv4j</url>
-
+ 
     <dependencies>
         <dependency>
             <groupId>org.slf4j</groupId>
