@@ -72,8 +72,7 @@ public class Main {
     }
 
     /**
-     * 
-    DOCUMENT ME!
+     * DOCUMENT ME!
      *
      * @param args the command line arguments
      *

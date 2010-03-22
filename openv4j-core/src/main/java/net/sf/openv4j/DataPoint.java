@@ -92,12 +92,11 @@ public enum DataPoint implements Serializable { //0x0000 to 0x0fff
     DHW_A1M1_CYCLES_RECIRC_FRIDAY(0x2220, Group.DHW_A1M1, CYCLES_RECIRC, FRIDAY, CYCLE_TIMES, AccessType.RW),
     DHW_A1M1_CYCLES_RECIRC_SATURDAY(0x2228, Group.DHW_A1M1, CYCLES_RECIRC, SATURDAY, CYCLE_TIMES, AccessType.RW),
     DHW_A1M1_CYCLES_RECIRC_SUNDAY(0x2230, Group.DHW_A1M1, CYCLES_RECIRC, SUNDAY, CYCLE_TIMES, AccessType.RW),
-
     A1M1_CONFIG_OPERATING_TYPE(0x2301, Group.A1M1, CONFIG, OPERATING_TYPE, BYTE, AccessType.RW),
     A1M1_STATE_SAVE_MODE(0x2302, Group.A1M1, STATE, SAVE_MODE, BOOL, AccessType.RO),
     A1M1_STATE_PARTY_MODE(0x2303, Group.A1M1, STATE, PARTY_MODE, BOOL, AccessType.RO),
-    A1M1_CONFIG_SLOPE(0x2304, Group.A1M1, CONFIG, SLOPE, BYTE, AccessType.RW),
-    A1M1_CONFIG_SHIFT(0x2305, Group.A1M1, CONFIG, SHIFT, BYTE, AccessType.RW, 0.1),
+    A1M1_CONFIG_SHIFT(0x2304, Group.A1M1, CONFIG, SHIFT, BYTE, AccessType.RW),
+    A1M1_CONFIG_SLOPE(0x2305, Group.A1M1, CONFIG, SLOPE, BYTE, AccessType.RW, 0.1),
     A1M1_TEMP_NOMINAL_ROOM_NORMAL(0x2306, Group.A1M1, TEMP_NOMINAL, ROOM_NORMAL, BYTE, AccessType.RW),
     A1M1_TEMP_NOMINAL_ROOM_REDUCED(0x2307, Group.A1M1, TEMP_NOMINAL, ROOM_REDUCED, BYTE, AccessType.RW),
     A1M1_TEMP_NOMINAL_ROOM_PARTY(0x2308, Group.A1M1, TEMP_NOMINAL, ROOM_PARTY, BYTE, AccessType.RW),
@@ -111,8 +110,7 @@ public enum DataPoint implements Serializable { //0x0000 to 0x0fff
     A1M1_STATE_UNKNOWN_AT_0X2509(0x2509, Group.A1M1, STATE, UNKNOWN, BYTE, AccessType.RO),
     A1M1_TEMP_NOMINAL_HEATING_SUPPLY(0x2511, Group.A1M1, TEMP_NOMINAL, Property.HEATING_SUPPLY, SHORT, AccessType.RO, 0.1),
     // NAchtumschaltung?? oder WW??
-    A1M1_STATE_UNKNOWN_AT_0X2535(0x2535, Group.A1M1, STATE, UNKNOWN, BYTE, AccessType.RO),
-    A1M1_STATE_UNKNOWN_AT_0X2541(0x2541, Group.A1M1, STATE, UNKNOWN, BYTE, AccessType.RO),
+    A1M1_STATE_UNKNOWN_AT_0X2535(0x2535, Group.A1M1, STATE, UNKNOWN, BYTE, AccessType.RO), A1M1_STATE_UNKNOWN_AT_0X2541(0x2541, Group.A1M1, STATE, UNKNOWN, BYTE, AccessType.RO),
     A1M1_STATE_PUMP(0x250a, Group.A1M1, STATE, PUMP, BOOL, AccessType.RO),
     A1M1_TEMP_NOMINAL_ROOM_CURRENT(0x250c, Group.A1M1, TEMP_NOMINAL, Property.ROOM_CURRENT, SHORT, AccessType.RO, 0.1),
     A1M1_TEMP_ACTUAL_UNKNOWN_AT_0X250E(0x250e, Group.A1M1, TEMP_ACTUAL, Property.UNKNOWN, SHORT, AccessType.RO, 0.1),
@@ -155,16 +153,13 @@ public enum DataPoint implements Serializable { //0x0000 to 0x0fff
     A1M1_TEMP_ACTUAL_HEATING_SUPPLY(0x2900, Group.A1M1, TEMP_ACTUAL, HEATING_SUPPLY, SHORT, AccessType.RO, 0.1),
     A1M1_TEMP_ACTUAL_HEATING_RETURN(0x2902, Group.A1M1, TEMP_ACTUAL, HEATING_RETURN, SHORT, AccessType.RO, 0.1),
     A1M1_STATE_PUMP_AT_0X2906(0x2906, Group.A1M1, STATE, PUMP, BOOL, AccessType.RO),
-
     //M2
-    M2_CYCLES_HEATING_MONDAY(0x3000, Group.M2, CYCLES_HEATING, MONDAY, CYCLE_TIMES, AccessType.RW),
-    M2_CYCLES_HEATING_TUESDAY(0x3008, Group.M2, CYCLES_HEATING, TUESDAY, CYCLE_TIMES, AccessType.RW),
+    M2_CYCLES_HEATING_MONDAY(0x3000, Group.M2, CYCLES_HEATING, MONDAY, CYCLE_TIMES, AccessType.RW), M2_CYCLES_HEATING_TUESDAY(0x3008, Group.M2, CYCLES_HEATING, TUESDAY, CYCLE_TIMES, AccessType.RW),
     M2_CYCLES_HEATING_WEDNSDAY(0x3010, Group.M2, CYCLES_HEATING, WEDNSDAY, CYCLE_TIMES, AccessType.RW),
     M2_CYCLES_HEATING_THURSDAY(0x3018, Group.M2, CYCLES_HEATING, THURSDAY, CYCLE_TIMES, AccessType.RW),
     M2_CYCLES_HEATING_FRIDAY(0x3020, Group.M2, CYCLES_HEATING, FRIDAY, CYCLE_TIMES, AccessType.RW),
     M2_CYCLES_HEATING_SATURDAY(0x3028, Group.M2, CYCLES_HEATING, SATURDAY, CYCLE_TIMES, AccessType.RW),
     M2_CYCLES_HEATING_SUNDAY(0x3030, Group.M2, CYCLES_HEATING, SUNDAY, CYCLE_TIMES, AccessType.RW),
-
     DHW_M2_CYCLES_HEATING_TUESDAY(0x3108, Group.DHW_M2, CYCLES_HEATING, TUESDAY, CYCLE_TIMES, AccessType.RW),
     DHW_M2_CYCLES_HEATING_WEDNSDAY(0x3110, Group.DHW_M2, CYCLES_HEATING, WEDNSDAY, CYCLE_TIMES, AccessType.RW),
     DHW_M2_CYCLES_HEATING_THURSDAY(0x3118, Group.DHW_M2, CYCLES_HEATING, THURSDAY, CYCLE_TIMES, AccessType.RW),
@@ -178,12 +173,11 @@ public enum DataPoint implements Serializable { //0x0000 to 0x0fff
     DHW_M2_CYCLES_RECIRC_FRIDAY(0x3220, Group.DHW_M2, CYCLES_RECIRC, FRIDAY, CYCLE_TIMES, AccessType.RW),
     DHW_M2_CYCLES_RECIRC_SATURDAY(0x3228, Group.DHW_M2, CYCLES_RECIRC, SATURDAY, CYCLE_TIMES, AccessType.RW),
     DHW_M2_CYCLES_RECIRC_SUNDAY(0x3230, Group.DHW_M2, CYCLES_RECIRC, SUNDAY, CYCLE_TIMES, AccessType.RW),
-
     M2_CONFIG_OPERATING_TYPE(0x3301, Group.M2, CONFIG, OPERATING_TYPE, BYTE, AccessType.RW),
     M2_STATE_SAVE_MODE(0x3302, Group.M2, STATE, SAVE_MODE, BOOL, AccessType.RO),
     M2_STATE_PARTY_MODE(0x3303, Group.M2, STATE, PARTY_MODE, BOOL, AccessType.RO),
-    M2_CONFIG_SLOPE(0x3304, Group.M2, CONFIG, SLOPE, BYTE, AccessType.RW),
-    M2_CONFIG_SHIFT(0x3305, Group.M2, CONFIG, SHIFT, BYTE, AccessType.RW, 0.1),
+    M2_CONFIG_SHIFT(0x3304, Group.M2, CONFIG, SHIFT, BYTE, AccessType.RW),
+    M2_CONFIG_SLOPE(0x3305, Group.M2, CONFIG, SLOPE, BYTE, AccessType.RW, 0.1),
     M2_TEMP_NOMINAL_ROOM_NORMAL(0x3306, Group.M2, TEMP_NOMINAL, ROOM_NORMAL, BYTE, AccessType.RW),
     M2_TEMP_NOMINAL_ROOM_REDUCED(0x3307, Group.M2, TEMP_NOMINAL, ROOM_REDUCED, BYTE, AccessType.RW),
     M2_TEMP_NOMINAL_ROOM_PARTY(0x3308, Group.M2, TEMP_NOMINAL, ROOM_PARTY, BYTE, AccessType.RW),
@@ -197,8 +191,7 @@ public enum DataPoint implements Serializable { //0x0000 to 0x0fff
     M2_STATE_UNKNOWN_AT_0X3509(0x3509, Group.M2, STATE, UNKNOWN, BYTE, AccessType.RO),
     M2_TEMP_NOMINAL_HEATING_SUPPLY(0x3511, Group.M2, TEMP_NOMINAL, Property.HEATING_SUPPLY, SHORT, AccessType.RO, 0.1),
     // NAchtumschaltung?? oder WW??
-    M2_STATE_UNKNOWN_AT_0X3535(0x3535, Group.M2, STATE, UNKNOWN, BYTE, AccessType.RO),
-    M2_STATE_UNKNOWN_AT_0X3541(0x3541, Group.M2, STATE, UNKNOWN, BYTE, AccessType.RO),
+    M2_STATE_UNKNOWN_AT_0X3535(0x3535, Group.M2, STATE, UNKNOWN, BYTE, AccessType.RO), M2_STATE_UNKNOWN_AT_0X3541(0x3541, Group.M2, STATE, UNKNOWN, BYTE, AccessType.RO),
     M2_STATE_PUMP(0x350a, Group.M2, STATE, PUMP, BOOL, AccessType.RO),
     M2_TEMP_NOMINAL_ROOM_CURRENT(0x350c, Group.M2, TEMP_NOMINAL, Property.ROOM_CURRENT, SHORT, AccessType.RO, 0.1),
     M2_TEMP_ACTUAL_UNKNOWN_AT_0X350E(0x350e, Group.M2, TEMP_ACTUAL, Property.UNKNOWN, SHORT, AccessType.RO, 0.1),
@@ -242,14 +235,12 @@ public enum DataPoint implements Serializable { //0x0000 to 0x0fff
     M2_TEMP_ACTUAL_HEATING_RETURN(0x3902, Group.M2, TEMP_ACTUAL, HEATING_RETURN, SHORT, AccessType.RO, 0.1),
     M2_STATE_PUMP_AT_0X3906(0x3906, Group.M2, STATE, PUMP, BOOL, AccessType.RO),
     //M3
-    M3_CYCLES_HEATING_MONDAY(0x4000, Group.M3, CYCLES_HEATING, MONDAY, CYCLE_TIMES, AccessType.RW),
-    M3_CYCLES_HEATING_TUESDAY(0x4008, Group.M3, CYCLES_HEATING, TUESDAY, CYCLE_TIMES, AccessType.RW),
+    M3_CYCLES_HEATING_MONDAY(0x4000, Group.M3, CYCLES_HEATING, MONDAY, CYCLE_TIMES, AccessType.RW), M3_CYCLES_HEATING_TUESDAY(0x4008, Group.M3, CYCLES_HEATING, TUESDAY, CYCLE_TIMES, AccessType.RW),
     M3_CYCLES_HEATING_WEDNSDAY(0x4010, Group.M3, CYCLES_HEATING, WEDNSDAY, CYCLE_TIMES, AccessType.RW),
     M3_CYCLES_HEATING_THURSDAY(0x4018, Group.M3, CYCLES_HEATING, THURSDAY, CYCLE_TIMES, AccessType.RW),
     M3_CYCLES_HEATING_FRIDAY(0x4020, Group.M3, CYCLES_HEATING, FRIDAY, CYCLE_TIMES, AccessType.RW),
     M3_CYCLES_HEATING_SATURDAY(0x4028, Group.M3, CYCLES_HEATING, SATURDAY, CYCLE_TIMES, AccessType.RW),
     M3_CYCLES_HEATING_SUNDAY(0x4030, Group.M3, CYCLES_HEATING, SUNDAY, CYCLE_TIMES, AccessType.RW),
-
     DHW_M3_CYCLES_HEATING_TUESDAY(0x4108, Group.DHW_M3, CYCLES_HEATING, TUESDAY, CYCLE_TIMES, AccessType.RW),
     DHW_M3_CYCLES_HEATING_WEDNSDAY(0x4110, Group.DHW_M3, CYCLES_HEATING, WEDNSDAY, CYCLE_TIMES, AccessType.RW),
     DHW_M3_CYCLES_HEATING_THURSDAY(0x4118, Group.DHW_M3, CYCLES_HEATING, THURSDAY, CYCLE_TIMES, AccessType.RW),
@@ -263,12 +254,11 @@ public enum DataPoint implements Serializable { //0x0000 to 0x0fff
     DHW_M3_CYCLES_RECIRC_FRIDAY(0x4220, Group.DHW_M3, CYCLES_RECIRC, FRIDAY, CYCLE_TIMES, AccessType.RW),
     DHW_M3_CYCLES_RECIRC_SATURDAY(0x4228, Group.DHW_M3, CYCLES_RECIRC, SATURDAY, CYCLE_TIMES, AccessType.RW),
     DHW_M3_CYCLES_RECIRC_SUNDAY(0x4230, Group.DHW_M3, CYCLES_RECIRC, SUNDAY, CYCLE_TIMES, AccessType.RW),
-
     M3_CONFIG_OPERATING_TYPE(0x4301, Group.M3, CONFIG, OPERATING_TYPE, BYTE, AccessType.RW),
     M3_STATE_SAVE_MODE(0x4302, Group.M3, STATE, SAVE_MODE, BOOL, AccessType.RO),
     M3_STATE_PARTY_MODE(0x4303, Group.M3, STATE, PARTY_MODE, BOOL, AccessType.RO),
-    M3_CONFIG_SLOPE(0x4304, Group.M3, CONFIG, SLOPE, BYTE, AccessType.RW),
-    M3_CONFIG_SHIFT(0x4305, Group.M3, CONFIG, SHIFT, BYTE, AccessType.RW, 0.1),
+    M3_CONFIG_SHIFT(0x4304, Group.M3, CONFIG, SHIFT, BYTE, AccessType.RW),
+    M3_CONFIG_SLOPE(0x4305, Group.M3, CONFIG, SLOPE, BYTE, AccessType.RW, 0.1),
     M3_TEMP_NOMINAL_ROOM_NORMAL(0x4306, Group.M3, TEMP_NOMINAL, ROOM_NORMAL, BYTE, AccessType.RW),
     M3_TEMP_NOMINAL_ROOM_REDUCED(0x4307, Group.M3, TEMP_NOMINAL, ROOM_REDUCED, BYTE, AccessType.RW),
     M3_TEMP_NOMINAL_ROOM_PARTY(0x4308, Group.M3, TEMP_NOMINAL, ROOM_PARTY, BYTE, AccessType.RW),
@@ -282,8 +272,7 @@ public enum DataPoint implements Serializable { //0x0000 to 0x0fff
     M3_STATE_UNKNOWN_AT_0X4509(0x4509, Group.M3, STATE, UNKNOWN, BYTE, AccessType.RO),
     M3_TEMP_NOMINAL_HEATING_SUPPLY(0x4511, Group.M3, TEMP_NOMINAL, Property.HEATING_SUPPLY, SHORT, AccessType.RO, 0.1),
     // NAchtumschaltung?? oder WW??
-    M3_STATE_UNKNOWN_AT_0X4535(0x4535, Group.M3, STATE, UNKNOWN, BYTE, AccessType.RO),
-    M3_STATE_UNKNOWN_AT_0X4541(0x4541, Group.M3, STATE, UNKNOWN, BYTE, AccessType.RO),
+    M3_STATE_UNKNOWN_AT_0X4535(0x4535, Group.M3, STATE, UNKNOWN, BYTE, AccessType.RO), M3_STATE_UNKNOWN_AT_0X4541(0x4541, Group.M3, STATE, UNKNOWN, BYTE, AccessType.RO),
     M3_STATE_PUMP(0x450a, Group.M3, STATE, PUMP, BOOL, AccessType.RO),
     M3_TEMP_NOMINAL_ROOM_CURRENT(0x450c, Group.M3, TEMP_NOMINAL, Property.ROOM_CURRENT, SHORT, AccessType.RO, 0.1),
     M3_TEMP_ACTUAL_UNKNOWN_AT_0X450E(0x450e, Group.M3, TEMP_ACTUAL, Property.UNKNOWN, SHORT, AccessType.RO, 0.1),
@@ -326,7 +315,6 @@ public enum DataPoint implements Serializable { //0x0000 to 0x0fff
     M3_TEMP_ACTUAL_HEATING_SUPPLY(0x4900, Group.M3, TEMP_ACTUAL, HEATING_SUPPLY, SHORT, AccessType.RO, 0.1),
     M3_TEMP_ACTUAL_HEATING_RETURN(0x4902, Group.M3, TEMP_ACTUAL, HEATING_RETURN, SHORT, AccessType.RO, 0.1),
     M3_STATE_PUMP_AT_0X4906(0x4906, Group.M3, STATE, PUMP, BOOL, AccessType.RO),
-
     BOILER_TEMP_ACTUAL_BOILER_WATER(0x5500, Group.BOILER, TEMP_ACTUAL, Property.BOILER_WATER, SHORT, AccessType.RO, 0.1),
     BOILER_TEMP_NOMINAL_BOILER_WATER(0x5502, Group.BOILER, TEMP_NOMINAL, Property.BOILER_WATER, SHORT, AccessType.RO, 0.1),
     BOILER_TEMP_NOMINAL_BOILER_WATER_HYSTERERSIS_LOW_FIX(0x5504, Group.BOILER, TEMP_NOMINAL, Property.BOILER_WATER_HYSTERERSIS_LOW_FIX, SHORT, AccessType.RO, 0.1),
@@ -340,8 +328,7 @@ public enum DataPoint implements Serializable { //0x0000 to 0x0fff
 
     //??     BOILER_TEMP_HEATING_SUPPLY_NOMINAL(0x5600, Group.BOILER, TEMP_NOMINAL, HEATING_SUPPLY, SHORT, 0.1),
     //??     BOILER_TEMP_HEATING_RETURN_NOMINAL(0x56a0, Group.BOILER, TEMP_NOMINAL, HEATING_RETURN, SHORT, 0.1);
-    BOILER_CONFIG_C2_02(0x5702, Group.BOILER, CONFIG, Property.C2_02, BYTE, AccessType.RW),
-    BOILER_CONFIG_C2_03(0x5703, Group.BOILER, CONFIG, C2_03, BYTE, AccessType.RW),
+    BOILER_CONFIG_C2_02(0x5702, Group.BOILER, CONFIG, Property.C2_02, BYTE, AccessType.RW), BOILER_CONFIG_C2_03(0x5703, Group.BOILER, CONFIG, C2_03, BYTE, AccessType.RW),
     BOILER_CONFIG_C2_04(0x5704, Group.BOILER, CONFIG, C2_04, BYTE, AccessType.RW),
     BOILER_CONFIG_C2_05(0x5705, Group.BOILER, CONFIG, C2_05, BYTE, AccessType.RW),
     BOILER_CONFIG_C2_06(0x5706, Group.BOILER, CONFIG, C2_06, BYTE, AccessType.RW),
@@ -356,18 +343,15 @@ public enum DataPoint implements Serializable { //0x0000 to 0x0fff
     BOILER_CONFIG_C2_32(0x5732, Group.BOILER, CONFIG, C2_32, BYTE, AccessType.RW),
     BOILER_CONFIG_C2_33(0x5733, Group.BOILER, CONFIG, C2_33, BYTE, AccessType.RW),
     //BURNER 2 stages
-    BOILER_CONFIG_C2_10(0x5710, Group.BOILER, CONFIG, C2_10, BYTE, AccessType.RW),
-    BOILER_CONFIG_C2_11(0x5711, Group.BOILER, CONFIG, C2_11, BYTE, AccessType.RW),
+    BOILER_CONFIG_C2_10(0x5710, Group.BOILER, CONFIG, C2_10, BYTE, AccessType.RW), BOILER_CONFIG_C2_11(0x5711, Group.BOILER, CONFIG, C2_11, BYTE, AccessType.RW),
     BOILER_CONFIG_C2_12(0x5712, Group.BOILER, CONFIG, C2_12, BYTE, AccessType.RW),
     //BURNER Modulated
-    BOILER_CONFIG_C2_15(0x5715, Group.BOILER, CONFIG, C2_15, BYTE, AccessType.RW),
-    BOILER_CONFIG_C2_16(0x5716, Group.BOILER, CONFIG, C2_16, BYTE, AccessType.RW),
+    BOILER_CONFIG_C2_15(0x5715, Group.BOILER, CONFIG, C2_15, BYTE, AccessType.RW), BOILER_CONFIG_C2_16(0x5716, Group.BOILER, CONFIG, C2_16, BYTE, AccessType.RW),
     BOILER_CONFIG_C2_17(0x5717, Group.BOILER, CONFIG, C2_17, BYTE, AccessType.RW),
     BOILER_CONFIG_C2_18(0x5718, Group.BOILER, CONFIG, C2_18, SHORT, AccessType.RW),
     BOILER_CONFIG_C2_1A(0x571a, Group.BOILER, CONFIG, C2_1A, BYTE, AccessType.RW),
     //TODO ????
-    DHW_TEMP_NOMINAL_DHW_CYLINDER(0x6300, Group.DHW, TEMP_NOMINAL, DHW_CYLINDER, BYTE, AccessType.RW),
-    SOLAR_STATE_NACHLADEUNTERDRUECKUNG(0x6551, Group.SOLAR, STATE, NACHLADEUNTERDRUECKUNG, BOOL, AccessType.RO),
+    DHW_TEMP_NOMINAL_DHW_CYLINDER(0x6300, Group.DHW, TEMP_NOMINAL, DHW_CYLINDER, BYTE, AccessType.RW), SOLAR_STATE_NACHLADEUNTERDRUECKUNG(0x6551, Group.SOLAR, STATE, NACHLADEUNTERDRUECKUNG, BOOL, AccessType.RO),
     SOLAR_STATE_PUMP(0x6552, Group.SOLAR, STATE, PUMP, BOOL, AccessType.RO, 0.1),
     SOLAR_ENERGY_KWH_COLLECTOR(0x6560, Group.SOLAR, ENERGY_KWH, COLLECTOR, INTEGER, AccessType.RO),
     SOLAR_TEMP_ACTUAL_COLLECTOR(0x6564, Group.SOLAR, TEMP_ACTUAL, COLLECTOR, SHORT, AccessType.RO, 0.1),
@@ -731,17 +715,20 @@ public enum DataPoint implements Serializable { //0x0000 to 0x0fff
                 switch (getValueKind()) {
                     case TIME_STAMP:
                         return "%-28s: %s";
+
                     default:
-
                         return "%-28s: UNKNOWN ValueKind:\"" + getValueKind().name() + "\"";
-
                 }
+
             case HOLIDAY:
                 return "%-28s: %s";
+
             case CYCLE_TIMES:
                 return "%-28s: %s";
+
             case ERROR_LIST_ENTRY:
                 return "%-28s: %s";
+
             default:
                 return "%-28s: UNKNOWN ValueKind:\"" + getValueKind().name() + "\"";
         }
@@ -761,6 +748,7 @@ public enum DataPoint implements Serializable { //0x0000 to 0x0fff
      */
     public void toString(MemoryImage mem, StringBuilder sb) {
         final Object decodedValue = decode(mem);
+
         switch (getType()) {
             case BOOL:
             case SHORT_HEX:
@@ -932,7 +920,8 @@ public enum DataPoint implements Serializable { //0x0000 to 0x0fff
                     return dc.getByte(addr);
                 } else {
                     final Byte byteValue = dc.getByte(addr);
-                    return byteValue == null ? null : byteValue * factor;
+
+                    return (byteValue == null) ? null : (byteValue * factor);
                 }
 
             case UBYTE:
@@ -941,7 +930,8 @@ public enum DataPoint implements Serializable { //0x0000 to 0x0fff
                     return dc.getUByte(addr);
                 } else {
                     final Short byteValue = dc.getUByte(addr);
-                    return byteValue == null ? null : byteValue * factor;
+
+                    return (byteValue == null) ? null : (byteValue * factor);
                 }
 
             case SHORT:
@@ -950,7 +940,8 @@ public enum DataPoint implements Serializable { //0x0000 to 0x0fff
                     return dc.getShort(addr);
                 } else {
                     final Short shortValue = dc.getShort(addr);
-                    return shortValue == null ? null : shortValue * factor;
+
+                    return (shortValue == null) ? null : (shortValue * factor);
                 }
 
             case USHORT:
@@ -959,7 +950,8 @@ public enum DataPoint implements Serializable { //0x0000 to 0x0fff
                     return dc.getUShort(addr);
                 } else {
                     final Integer shortValue = dc.getUShort(addr);
-                    return shortValue == null ? null : shortValue * factor;
+
+                    return (shortValue == null) ? null : (shortValue * factor);
                 }
 
             case INTEGER:
@@ -968,7 +960,8 @@ public enum DataPoint implements Serializable { //0x0000 to 0x0fff
                     return dc.getInteger(addr);
                 } else {
                     final Integer intValue = dc.getInteger(addr);
-                    return intValue == null ? null : intValue * factor;
+
+                    return (intValue == null) ? null : (intValue * factor);
                 }
 
             default:
@@ -980,64 +973,133 @@ public enum DataPoint implements Serializable { //0x0000 to 0x0fff
      * DOCUMENT ME!
      *
      * @param dc DOCUMENT ME!
-     * @param d DOCUMENT ME!
+     * @param o DOCUMENT ME!
      *
      * @throws IllegalArgumentException DOCUMENT ME!
      */
     public void encode(MemoryImage dc, Object o) {
+        if (AccessType.RO.equals(access)) {
+            throw new RuntimeException(String.format("DataPoint %s not setable!", this.toString()));
+        }
+        if (o instanceof Boolean) {
+            encodeBoolean(dc, ((Boolean) o).booleanValue());
+        } else if (o instanceof Double) {
+            encodeDouble(dc, ((Double) o).doubleValue());
+        } else if (o instanceof Byte) {
+            encodeByte(dc, ((Byte) o).byteValue());
+        } else if (o instanceof Short) {
+            encodeShort(dc, ((Short) o).shortValue());
+        } else if (o instanceof Integer) {
+            encodeInteger(dc, ((Integer) o).intValue());
+        } else {
+            switch (type) {
+
+                case SHORT_HEX:
+
+                    if (o instanceof Short) {
+                        dc.setShortHex(addr, (Short) o);
+                    } else {
+                        throw new IllegalArgumentException("DataType Short expected");
+                    }
+
+                    break;
+
+                default:
+                    throw new IllegalArgumentException();
+            }
+        }
+    }
+
+    private void encodeBoolean(MemoryImage dc, boolean b) {
+        if (BOOL.equals(type)) {
+            dc.setBool(addr, b);
+        } else {
+            throw new IllegalArgumentException("DataType boolean expected");
+        }
+    }
+
+    private void encodeByte(MemoryImage dc, byte b) {
         switch (type) {
-            case BOOL:
-                if (o instanceof Boolean) {
-                    dc.setBool(addr, (Boolean) o);
-                } else {
-                    throw new IllegalArgumentException("DataType Boolean expected");
-                }
-
-                break;
-
-            case SHORT_HEX:
-                if (o instanceof Short) {
-                    dc.setShortHex(addr, (Short) o);
-                } else {
-                    throw new IllegalArgumentException("DataType Short expected");
-                }
-                break;
-
             case BYTE:
-                if (o instanceof Byte) {
-                    if (Double.isNaN(factor)) {
-                        dc.setByte(addr, (Byte) o);
-                    } else {
-                        dc.setByte(addr, (byte) Math.round((Byte) o / factor));
-                    }
+                if (Double.isNaN(factor)) {
+                    dc.setByte(addr, b);
+                } else {
+                    dc.setByte(addr, (byte) Math.round(b / factor));
                 }
                 break;
-
             case SHORT:
-
-                if (o instanceof Short) {
-                    if (Double.isNaN(factor)) {
-                        dc.setShort(addr, (Short) o);
-                    } else {
-                        dc.setShort(addr, (byte) Math.round((Short) o / factor));
-                    }
-                }
-
+                encodeShort(dc, (short) b);
                 break;
-
             case INTEGER:
+                encodeInteger(dc, (int) b);
+                break;
+            default:
+                throw new IllegalArgumentException("DataType byte expected");
+        }
+    }
 
-                if (o instanceof Integer) {
-                    if (Double.isNaN(factor)) {
-                        dc.setInteger(addr, (Integer) o);
-                    } else {
-                        dc.setInteger(addr, (byte) Math.round((Integer) o / factor));
-                    }
+    private void encodeShort(MemoryImage dc, short s) {
+        switch (type) {
+            case BYTE:
+                throw new IllegalArgumentException("DataType byte expected");
+            case SHORT:
+                if (Double.isNaN(factor)) {
+                    dc.setShort(addr, s);
+                } else {
+                    dc.setShort(addr, (short) Math.round(s / factor));
                 }
                 break;
-
+            case INTEGER:
+                encodeInteger(dc, (int) s);
+                break;
             default:
-                throw new IllegalArgumentException();
+                throw new IllegalArgumentException("DataType short expected");
+        }
+    }
+
+    private void encodeInteger(MemoryImage dc, int i) {
+        switch (type) {
+            case BYTE:
+                throw new IllegalArgumentException("DataType byte expected");
+            case SHORT:
+                throw new IllegalArgumentException("DataType short expected");
+            case INTEGER:
+                if (Double.isNaN(factor)) {
+                    dc.setInteger(addr, i);
+                } else {
+                    dc.setInteger(addr, (int) Math.round(i / factor));
+                }
+                break;
+            default:
+                throw new IllegalArgumentException("DataType int expected");
+        }
+    }
+
+    private void encodeDouble(MemoryImage dc, double d) {
+        switch (type) {
+            case BYTE:
+                if (Double.isNaN(factor)) {
+                    dc.setByte(addr, (byte) Math.round(d));
+                } else {
+                    dc.setByte(addr, (byte) Math.round(d / factor));
+                }
+                break;
+            case SHORT:
+                if (Double.isNaN(factor)) {
+                    dc.setShort(addr, (short) Math.round(d));
+                } else {
+                    dc.setShort(addr, (short) Math.round(d / factor));
+                }
+                break;
+            case INTEGER:
+                if (Double.isNaN(factor)) {
+                    dc.setInteger(addr, (int) Math.round(d));
+                } else {
+                    dc.setInteger(addr, (int) Math.round(d / factor));
+                }
+                break;
+            default:
+                throw new IllegalArgumentException("DataType byte expected");
         }
     }
 
@@ -1077,5 +1139,4 @@ public enum DataPoint implements Serializable { //0x0000 to 0x0fff
 
         System.err.print(sb.toString());
     }
-
 }

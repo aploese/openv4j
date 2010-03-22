@@ -166,12 +166,19 @@ public class SegmentedDataContainer extends DataContainer {
     /**
      * DOCUMENT ME!
      *
-     * @param addr DOCUMENT ME!
-     * @param theData DOCUMENT ME!
+     * @param address DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
      */
     @Override
-    public void setRawByte(int addr, byte theData) {
-        dataSegments[addr / segmentSize].setByteAtPos(addr % segmentSize, theData);
+    public int getRawByte(int address) {
+        final int baseIndex = address / segmentSize;
+
+        if (dataSegments[baseIndex] == null) {
+            return 0x00ff;
+        } else {
+            return dataSegments[baseIndex].getByteAtPos(address % segmentSize) & 0x00ff;
+        }
     }
 
     /**
@@ -187,6 +194,17 @@ public class SegmentedDataContainer extends DataContainer {
         } else {
             super.setBytes(addr, theData);
         }
+    }
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @param addr DOCUMENT ME!
+     * @param theData DOCUMENT ME!
+     */
+    @Override
+    public void setRawByte(int addr, byte theData) {
+        dataSegments[addr / segmentSize].setByteAtPos(addr % segmentSize, theData);
     }
 
     /**
@@ -215,23 +233,5 @@ public class SegmentedDataContainer extends DataContainer {
         }
 
         return sb.toString();
-    }
-
-    /**
-     * DOCUMENT ME!
-     *
-     * @param address DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
-     */
-    @Override
-    public int getRawByte(int address) {
-        final int baseIndex = address / segmentSize;
-
-        if (dataSegments[baseIndex] == null) {
-            return 0x00ff;
-        } else {
-            return dataSegments[baseIndex].getByteAtPos(address % segmentSize) & 0x00ff;
-        }
     }
 }

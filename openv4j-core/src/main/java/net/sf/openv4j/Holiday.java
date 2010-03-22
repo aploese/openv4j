@@ -27,30 +27,19 @@ package net.sf.openv4j;
 import java.util.Date;
 
 /**
+ * DOCUMENT ME!
  *
  * @author aploese
  */
 public class Holiday {
-    private Date start;
     private Date end;
-    private byte startFlag;
+    private Date start;
     private byte endFlag;
+    private byte startFlag;
 
     /**
-     * @return the start
-     */
-    public Date getStart() {
-        return start;
-    }
-
-    /**
-     * @param start the start to set
-     */
-    public void setStart(Date start) {
-        this.start = start;
-    }
-
-    /**
+     * DOCUMENT ME!
+     *
      * @return the end
      */
     public Date getEnd() {
@@ -58,13 +47,26 @@ public class Holiday {
     }
 
     /**
-     * @param end the end to set
+     * DOCUMENT ME!
+     *
+     * @return the endFlag
      */
-    public void setEnd(Date end) {
-        this.end = end;
+    public byte getEndFlag() {
+        return endFlag;
     }
 
     /**
+     * DOCUMENT ME!
+     *
+     * @return the start
+     */
+    public Date getStart() {
+        return start;
+    }
+
+    /**
+     * DOCUMENT ME!
+     *
      * @return the startFlag
      */
     public byte getStartFlag() {
@@ -72,18 +74,35 @@ public class Holiday {
     }
 
     /**
-     * @return the endFlag
+     * DOCUMENT ME!
+     *
+     * @param end the end to set
      */
-    public byte getEndFlag() {
-        return endFlag;
-    }
-
-    @Override
-    public String toString() {
-        return String.format("%s : 0x%02x | %s : 0x%02x", start, startFlag, end, endFlag);
+    public void setEnd(Date end) {
+        this.end = end;
     }
 
     /**
+     * DOCUMENT ME!
+     *
+     * @param endFlag the endFlag to set
+     */
+    public void setEndFlag(byte endFlag) {
+        this.endFlag = endFlag;
+    }
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @param start the start to set
+     */
+    public void setStart(Date start) {
+        this.start = start;
+    }
+
+    /**
+     * DOCUMENT ME!
+     *
      * @param startFlag the startFlag to set
      */
     public void setStartFlag(byte startFlag) {
@@ -91,10 +110,12 @@ public class Holiday {
     }
 
     /**
-     * @param endFlag the endFlag to set
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
      */
-    public void setEndFlag(byte endFlag) {
-        this.endFlag = endFlag;
+    @Override
+    public String toString() {
+        return String.format("%s : 0x%02x | %s : 0x%02x", start, startFlag, end, endFlag);
     }
-
 }

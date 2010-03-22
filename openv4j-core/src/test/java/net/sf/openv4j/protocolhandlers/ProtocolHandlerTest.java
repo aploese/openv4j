@@ -133,14 +133,14 @@ public class ProtocolHandlerTest {
 
         DataContainer container = new SimpleDataContainer();
 
-        container.addToDataContainer(DataPoint.M2_CONFIG_SLOPE);
-        DataPoint.M2_CONFIG_SLOPE.encode(container, (byte)22);
+        container.addToDataContainer(DataPoint.M2_CONFIG_SHIFT);
+        DataPoint.M2_CONFIG_SHIFT.encode(container, (byte) 22);
         protocolHandler.setWriteRequest(container);
 
         synchronized (container) {
             container.wait(container.getDataBlockCount() * 60000);
         }
 
-        assertEquals((byte)22, DataPoint.M2_CONFIG_SLOPE.decode(dummy));
+        assertEquals((byte) 22, DataPoint.M2_CONFIG_SHIFT.decode(dummy));
     }
 }

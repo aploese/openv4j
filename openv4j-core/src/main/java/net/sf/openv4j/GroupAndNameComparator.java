@@ -7,8 +7,7 @@ package net.sf.openv4j;
 import java.util.Comparator;
 
 /**
- * 
-DOCUMENT ME!
+ * DOCUMENT ME!
  *
  * @author aploese
  */

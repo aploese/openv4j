@@ -74,8 +74,7 @@ public class Main {
     }
 
     /**
-     * 
-    DOCUMENT ME!
+     * DOCUMENT ME!
      *
      * @param args the command line arguments
      *
@@ -163,7 +162,7 @@ public class Main {
                     container.addToDataContainer(dp);
                 }
             } else if (cmd.hasOption("full-scan")) {
-                    container.addToDataContainer(0x0000, 0x010000);
+                container.addToDataContainer(0x0000, 0x010000);
             }
         }
 

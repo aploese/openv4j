@@ -27,8 +27,7 @@ package net.sf.openv4j;
 import java.util.Date;
 
 /**
- * 
-DOCUMENT ME!
+ * DOCUMENT ME!
  *
  * @author aploese
  */
@@ -48,8 +47,7 @@ public class ErrorListEntry {
     }
 
     /**
-     * 
-    DOCUMENT ME!
+     * DOCUMENT ME!
      *
      * @return the errorCode
      */
@@ -58,8 +56,7 @@ public class ErrorListEntry {
     }
 
     /**
-     * 
-    DOCUMENT ME!
+     * DOCUMENT ME!
      *
      * @return the tinestamp
      */
@@ -68,8 +65,7 @@ public class ErrorListEntry {
     }
 
     /**
-     * 
-    DOCUMENT ME!
+     * DOCUMENT ME!
      *
      * @param errorCode the errorCode to set
      */
@@ -78,8 +74,7 @@ public class ErrorListEntry {
     }
 
     /**
-     * 
-    DOCUMENT ME!
+     * DOCUMENT ME!
      *
      * @param tinestamp the tinestamp to set
      */

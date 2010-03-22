@@ -52,7 +52,9 @@ public class ProtocolHandler {
     private Thread t;
     private boolean closed;
 
-
+    /**
+     * Creates a new ProtocolHandler object.
+     */
     public ProtocolHandler() {
         super();
     }

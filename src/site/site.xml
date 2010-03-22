@@ -24,12 +24,7 @@
          <menu ref="modules" />
 
         <menu ref="parent" inherit="top"/>
-        <!-- not working menu ref="modules"/-->
-        <menu name="Sub Projects">
-            <item name="OpenV4J Core" href="openv4j-core/index.html"/>
-            <item name="OpenV4J Memory Image" href="openv4j-memory-image/index.html"/>
-            <item name="OpenV4J Test Device" href="openv4j-test-device/index.html"/>
-        </menu>
+        <menu ref="modules"/>
         <menu ref="reports" inherit="bottom"/>
     </body>
 </project>

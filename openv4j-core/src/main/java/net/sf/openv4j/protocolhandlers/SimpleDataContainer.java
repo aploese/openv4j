@@ -68,26 +68,6 @@ public class SimpleDataContainer extends DataContainer {
     /**
      * DOCUMENT ME!
      *
-     * @param address DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
-     */
-    @Override
-    public int getRawByte(int address) {
-        for (DataBlock db : data) {
-            if (hasAddress(db, address)) {
-                return db.getByteAtPos(address - db.getBaseAddress()) & 0x00ff;
-            }
-        }
-
-        log.error(String.format("No such Address %04x", address));
-
-        return 0x00ff;
-    }
-
-    /**
-     * DOCUMENT ME!
-     *
      * @param i DOCUMENT ME!
      *
      * @return DOCUMENT ME!
@@ -114,6 +94,26 @@ public class SimpleDataContainer extends DataContainer {
      */
     public int getLength() {
         return data.size();
+    }
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @param address DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
+    @Override
+    public int getRawByte(int address) {
+        for (DataBlock db : data) {
+            if (hasAddress(db, address)) {
+                return db.getByteAtPos(address - db.getBaseAddress()) & 0x00ff;
+            }
+        }
+
+        log.error(String.format("No such Address %04x", address));
+
+        return 0x00ff;
     }
 
     /**

@@ -24,11 +24,6 @@
  */
 package net.sf.openv4j;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-
 import net.sf.openv4j.protocolhandlers.DataContainer;
 import net.sf.openv4j.protocolhandlers.SegmentedDataContainer;
 

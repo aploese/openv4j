@@ -25,8 +25,7 @@
 package net.sf.openv4j;
 
 /**
- * 
-DOCUMENT ME!
+ * DOCUMENT ME!
  *
  * @author aploese
  */

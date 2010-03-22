@@ -24,13 +24,13 @@
  */
 package net.sf.openv4j.protocolhandlers;
 
-import net.sf.openv4j.ErrorListEntry;
-import net.sf.openv4j.Holiday;
 import java.util.Calendar;
 import java.util.Date;
 
 import net.sf.openv4j.CycleTimeEntry;
 import net.sf.openv4j.CycleTimes;
+import net.sf.openv4j.ErrorListEntry;
+import net.sf.openv4j.Holiday;
 
 /**
  * DOCUMENT ME!
@@ -38,6 +38,15 @@ import net.sf.openv4j.CycleTimes;
  * @author aploese
  */
 public abstract class MemoryImage {
+    /**
+     * DOCUMENT ME!
+     *
+     * @param address DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
+    public abstract int getRawByte(int address);
+
     /**
      * DOCUMENT ME!
      *
@@ -50,12 +59,45 @@ public abstract class MemoryImage {
      * DOCUMENT ME!
      *
      * @param addr DOCUMENT ME!
+     * @param d DOCUMENT ME!
+     */
+    public void addTime(int addr, Date d) {
+        Calendar c = Calendar.getInstance();
+        c.setTime(d);
+        c.set(Calendar.HOUR_OF_DAY, decodeBCD(getRawByte(addr)));
+        c.set(Calendar.MINUTE, decodeBCD(getRawByte(addr + 1)));
+        c.set(Calendar.SECOND, decodeBCD(getRawByte(addr + 2)));
+        d.setTime(c.getTimeInMillis());
+    }
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @param addr DOCUMENT ME!
      *
      * @return DOCUMENT ME!
      */
     public Boolean getBool(int addr) {
         final int value = getRawByte(addr);
-        return value == 0x00ff ? null : value != 0;
+
+        return (value == 0x00ff) ? null : (value != 0);
+    }
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @param addr DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
+    public Byte getByte(int addr) {
+        int result = getRawByte(addr);
+
+        if (result == 0xff) {
+            return null;
+        }
+
+        return (byte) result;
     }
 
     /**
@@ -93,7 +135,68 @@ public abstract class MemoryImage {
      * @return DOCUMENT ME!
      */
     public ErrorListEntry getErrorListEntry(int addr) {
-        return new ErrorListEntry(getRawByte(addr),getTimeStamp_8(addr + 1));
+        return new ErrorListEntry(getRawByte(addr), getTimeStamp_8(addr + 1));
+    }
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @param addr DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
+    public Holiday getHoliday(int addr) {
+        Holiday result = new Holiday();
+        result.setStart(getTimeStamp_Date(addr));
+        result.setStartFlag((byte) getRawByte(addr + 4));
+        addTime(addr + 5, result.getStart());
+        result.setEnd(getTimeStamp_Date(addr + 8));
+        result.setEndFlag((byte) getRawByte(addr + 12));
+        addTime(addr + 13, result.getEnd());
+
+        return result;
+    }
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @param addr DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
+
+    // swap bytes
+    public Integer getInteger(int addr) {
+        int result = getRawByte(addr);
+        result |= (getRawByte(addr + 1) << 8);
+        result |= (getRawByte(addr + 2) << 16);
+        result |= (getRawByte(addr + 3) << 24);
+
+        if (result == 0xffffffff) {
+            return null;
+        }
+
+        return result;
+    }
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @param addr DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
+
+    // swap bytes
+    public Short getShort(int addr) {
+        int result = getRawByte(addr);
+        result |= (getRawByte(addr + 1) << 8);
+
+        if (result == 0xffff) {
+            return null;
+        }
+
+        return (short) result;
     }
 
     /**
@@ -108,7 +211,8 @@ public abstract class MemoryImage {
     public Short getShortHex(int addr) {
         int result = getRawByte(addr) << 8;
         result |= getRawByte(addr + 1);
-        return result == 0xffff ? null : (short)result;
+
+        return (result == 0xffff) ? null : (short) result;
     }
 
     /**
@@ -158,30 +262,14 @@ public abstract class MemoryImage {
      *
      * @return DOCUMENT ME!
      */
-    public void addTime(int addr, Date d) {
-        Calendar c = Calendar.getInstance();
-        c.setTime(d);
-        c.set(Calendar.HOUR_OF_DAY, decodeBCD(getRawByte(addr)));
-        c.set(Calendar.MINUTE, decodeBCD(getRawByte(addr + 1)));
-        c.set(Calendar.SECOND, decodeBCD(getRawByte(addr + 2)));
-        d.setTime(c.getTimeInMillis());
-    }
-
-
-    /**
-     * DOCUMENT ME!
-     *
-     * @param addr DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
-     */
-    public Byte getByte(int addr) {
+    public Short getUByte(int addr) {
         int result = getRawByte(addr);
+
         if (result == 0xff) {
             return null;
         }
 
-        return (byte)result;
+        return (short) result;
     }
 
     /**
@@ -191,9 +279,7 @@ public abstract class MemoryImage {
      *
      * @return DOCUMENT ME!
      */
-
-    // swap bytes
-    public Short getShort(int addr) {
+    public Integer getUShort(int addr) {
         int result = getRawByte(addr);
         result |= (getRawByte(addr + 1) << 8);
 
@@ -201,28 +287,7 @@ public abstract class MemoryImage {
             return null;
         }
 
-        return (short)result;
-    }
-
-    /**
-     * DOCUMENT ME!
-     *
-     * @param addr DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
-     */
-
-    // swap bytes
-    public Integer getInteger(int addr) {
-        int result = getRawByte(addr);
-        result |= (getRawByte(addr + 1) << 8);
-        result |= (getRawByte(addr + 2) << 16);
-        result |= (getRawByte(addr + 3) << 24);
-        if (result == 0xffffffff) {
-            return null;
-        }
-
-        return result;
+        return (int) result;
     }
 
     /**
@@ -233,6 +298,16 @@ public abstract class MemoryImage {
      */
     public void setBool(int addr, boolean value) {
         setRawByte(addr, (byte) (value ? 1 : 0));
+    }
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @param addr DOCUMENT ME!
+     * @param value DOCUMENT ME!
+     */
+    public void setByte(int addr, byte value) {
+        setRawByte(addr, value);
     }
 
     /**
@@ -253,19 +328,11 @@ public abstract class MemoryImage {
      * @param addr DOCUMENT ME!
      * @param value DOCUMENT ME!
      */
-    public void setShortHex(int addr, short value) {
-        setRawByte(addr, (byte) ((value >> 8) & 0x00FF));
-        setRawByte(addr + 1, (byte) (value & 0x00FF));
-    }
-
-    /**
-     * DOCUMENT ME!
-     *
-     * @param addr DOCUMENT ME!
-     * @param value DOCUMENT ME!
-     */
-    public void setByte(int addr, byte value) {
-        setRawByte(addr, value);
+    public void setInteger(int addr, int value) {
+        setRawByte(addr, (byte) value);
+        setRawByte(addr + 1, (byte) ((value >> 8) & 0x00FF));
+        setRawByte(addr + 2, (byte) ((value >> 16) & 0x00FF));
+        setRawByte(addr + 3, (byte) ((value >> 24) & 0x00FF));
     }
 
     /**
@@ -285,54 +352,12 @@ public abstract class MemoryImage {
      * @param addr DOCUMENT ME!
      * @param value DOCUMENT ME!
      */
-    public void setInteger(int addr, int value) {
-        setRawByte(addr, (byte) value);
-        setRawByte(addr + 1, (byte) ((value >> 8) & 0x00FF));
-        setRawByte(addr + 2, (byte) ((value >> 16) & 0x00FF));
-        setRawByte(addr + 3, (byte) ((value >> 24) & 0x00FF));
+    public void setShortHex(int addr, short value) {
+        setRawByte(addr, (byte) ((value >> 8) & 0x00FF));
+        setRawByte(addr + 1, (byte) (value & 0x00FF));
     }
-
-    /**
-     * DOCUMENT ME!
-     *
-     * @param address DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
-     */
-    public abstract int getRawByte(int address);
 
     private int decodeBCD(int bcdByte) {
         return (bcdByte & 0x0F) + (((bcdByte & 0x00F0) >> 4) * 10);
-    }
-
-    public Holiday getHoliday(int addr) {
-        Holiday result = new Holiday();
-        result.setStart(getTimeStamp_Date(addr));
-        result.setStartFlag((byte)getRawByte(addr + 4));
-        addTime(addr + 5, result.getStart());
-        result.setEnd(getTimeStamp_Date(addr + 8));
-        result.setEndFlag((byte)getRawByte(addr + 12));
-        addTime(addr + 13, result.getEnd());
-        return result;
-    }
-
-    public Short getUByte(int addr) {
-        int result = getRawByte(addr);
-        if (result == 0xff) {
-            return null;
-        }
-
-        return (short)result;
-   }
-
-    public Integer getUShort(int addr) {
-        int result = getRawByte(addr);
-        result |= (getRawByte(addr + 1) << 8);
-
-        if (result == 0xffff) {
-            return null;
-        }
-
-        return (int)result;
     }
 }

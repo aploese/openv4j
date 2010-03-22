@@ -109,6 +109,18 @@ public class KW2Dummy extends MemoryImage {
     /**
      * DOCUMENT ME!
      *
+     * @param address DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
+    @Override
+    public int getRawByte(int address) {
+        return memMap[address] & 0x00ff;
+    }
+
+    /**
+     * DOCUMENT ME!
+     *
      * @param serialPortName DOCUMENT ME!
      *
      * @throws IOException DOCUMENT ME!
@@ -181,18 +193,6 @@ public class KW2Dummy extends MemoryImage {
         }
 
         return sb.toString();
-    }
-
-    /**
-     * DOCUMENT ME!
-     *
-     * @param address DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
-     */
-    @Override
-    public int getRawByte(int address) {
-        return memMap[address] & 0x00ff;
     }
 
     /**
