@@ -6,10 +6,10 @@
         <artifactId>openv4j</artifactId>
         <version>0.1.0-SNAPSHOT</version>
     </parent>
+
     <artifactId>openv4j-memory-image</artifactId>
     <packaging>jar</packaging>
     <name>Openv4J Memory Image</name>
-    <url>http://net.sf.openv4j</url>
 
     <dependencies>
         <dependency>

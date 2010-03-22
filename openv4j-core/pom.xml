@@ -10,7 +10,6 @@
     <artifactId>openv4j-core</artifactId>
     <packaging>jar</packaging>
     <name>Openv4J Core</name>
-    <url>http://net.sf.openv4j</url>
 
     <dependencies>
         <dependency>
