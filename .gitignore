@@ -4,3 +4,5 @@ openv4j-swing-gui/target/
 openv4j-test-device/target/
 target/
 */nbactions.xml
+de.ibapl.openv4j.core/nbproject/
+de.ibapl.openv4j.core/src/test/resources/viessmann-xml/

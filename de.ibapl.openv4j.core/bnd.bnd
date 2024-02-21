@@ -1,0 +1,8 @@
+-noimportjava: true
+Export-Package: \
+    de.ibapl.openv4j.api,\
+    de.ibapl.openv4j.spi.protocolhandlers,\
+    de.ibapl.openv4j.spi.emulators,\
+    de.ibapl.openv4j.api.devices,\
+    de.ibapl.openv4j.api.devices.generic
+
