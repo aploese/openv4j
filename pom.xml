@@ -139,28 +139,24 @@
                         <failIfMissing>true</failIfMissing>
                         <aggregate>true</aggregate>
                         <strictCheck>true</strictCheck>
-                        <properties>
-                            <copyright-range>${project.inceptionYear}-2024</copyright-range>
-                        </properties>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <id>check-java-headers</id>
-                            <phase>verify</phase>
-                            <goals>
-                                <goal>check</goal>
-                            </goals>
-                            <configuration>
+                        <licenseSets>
+                            <licenseSet>
                                 <header>header-template-lgpl-java.txt</header>
-                                <mapping>
-                                    <java>SLASHSTAR_STYLE</java>
-                                </mapping>
                                 <includes>
                                     <include>**/*.java</include>
                                 </includes>
-                            </configuration>
-                        </execution>
-                    </executions>
+                                <excludes>
+                                </excludes>
+                            </licenseSet>
+                        </licenseSets>
+                    </configuration>
+                    <dependencies>
+                        <dependency>
+                            <groupId>com.mycila</groupId>
+                            <artifactId>license-maven-plugin-git</artifactId>
+                            <version>4.3</version>
+                        </dependency>
+                    </dependencies>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>

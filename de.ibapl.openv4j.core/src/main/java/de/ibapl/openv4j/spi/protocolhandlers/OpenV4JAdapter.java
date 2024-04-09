@@ -1,6 +1,6 @@
 /*
  * OpenV4J - Drivers for the Viessmann optolink protocol https://github.com/openv/openv/wiki
- * Copyright (C) 2009-2024, Arne Plöse and individual contributors as indicated
+ * Copyright (C) 2024, Arne Plöse and individual contributors as indicated
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -34,6 +34,7 @@ import de.ibapl.spsw.api.TimeoutIOException;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.ByteChannel;
+import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -106,6 +107,34 @@ public class OpenV4JAdapter implements AutoCloseable {
         }
         buffer.flip();
         area.copyBytesFrom(buffer);
+    }
+
+    public void sendKwVirtualWriteRequest(MemoryImage.UpdateEntry entry)
+            throws IOException {
+        buffer.clear();
+        buffer.put(KW2_VIRTUAL_WRITE_REQEST);
+        buffer.putShort((short) entry.getAddress());
+        buffer.put((byte) (entry.getSize() & 0xff)).flip();
+        entry.copyBytesTo(buffer);
+        buffer.flip();
+        channel.write(buffer);
+        if (buffer.hasRemaining()) {
+            throw new RuntimeException(String.format("actual read size (%i) mismatch expected %i", entry.getSize(), buffer.position()));
+        }
+        buffer.clear().limit(1);
+        channel.read(buffer);
+        final byte b = buffer.flip().get();
+        if (b != RESPONSE_WRITE_OK) {
+            throw new RuntimeException(String.format("Write result 0x00 expected, but got 0x%02x", b));
+        }
+    }
+
+    public void sendPendingUpdates(MemoryImage mi) throws IOException {
+        waitForTimeSlotAndSendACK();
+        while (!mi.pendingUpdateEntries.isEmpty()) {
+            sendKwVirtualWriteRequest(mi.pendingUpdateEntries.getFirst());
+            mi.pendingUpdateEntries.removeFirst();
+        }
     }
 
     /**

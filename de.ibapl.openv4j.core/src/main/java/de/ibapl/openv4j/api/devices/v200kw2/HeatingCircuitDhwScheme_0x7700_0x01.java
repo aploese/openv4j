@@ -1,6 +1,6 @@
 /*
  * OpenV4J - Drivers for the Viessmann optolink protocol https://github.com/openv/openv/wiki
- * Copyright (C) 2009-2024, Arne Plöse and individual contributors as indicated
+ * Copyright (C) 2024, Arne Plöse and individual contributors as indicated
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -31,6 +31,16 @@ import de.ibapl.openv4j.spi.protocolhandlers.MemoryImage;
  */
 public class HeatingCircuitDhwScheme_0x7700_0x01 extends MemArea {
 
+    /**
+     * BC is boiler circuit - DE: KK Kesselkreis DHW is Domestic Hot Water - DE:
+     * WW Warm Wasser
+     *
+     *
+     *
+     * A1 is System circuit 1 (heatig circuit 1) M1 is Mixer circuit 1 (heatig
+     * circuit 1) M2 is Mixer circuit 2 (heatig circuit 2) M3 is Mixer circuit 3
+     * (heatig circuit 3) DHW is Domestic Hot Water
+     */
     public enum HeatingCircuitDhwScheme {
         @Name("1 KK")
         _1_BC,
@@ -43,12 +53,18 @@ public class HeatingCircuitDhwScheme_0x7700_0x01 extends MemArea {
         @Name("5 KK + M2")
         _5_BC_PLUS_M2,
         @Name("6 KK + M2 + WW")
-        _6_BC_PLUS_M2_PLUS_DHW;
+        _6_BC_PLUS_M2_PLUS_DHW,
+        @Name("7 M2 + M3")
+        _7_M2_PLUS_M3,
+        @Name("8 M2 + M3 + WW")
+        _8_M2_PLUS_M3_PLUS_DHW,
+        @Name("9 KK + M2 + M3")
+        _9_BC_PLUS_M2_PLUS_M2,
+        @Name("10 KK + M2 + M3 + WW")
+        _10_BC_PLUS_M2_PLUS_M3_PLUS_DHW;
 
-        HeatingCircuitDhwScheme decode(byte b) {
+        private static HeatingCircuitDhwScheme decode(byte b) {
             return switch (b) {
-                case 0x00 ->
-                    null;
                 case 0x01 ->
                     _1_BC;
                 case 0x02 ->
@@ -61,8 +77,43 @@ public class HeatingCircuitDhwScheme_0x7700_0x01 extends MemArea {
                     _5_BC_PLUS_M2;
                 case 0x06 ->
                     _6_BC_PLUS_M2_PLUS_DHW;
+                case 0x07 ->
+                    _7_M2_PLUS_M3;
+                case 0x08 ->
+                    _8_M2_PLUS_M3_PLUS_DHW;
+                case 0x09 ->
+                    _9_BC_PLUS_M2_PLUS_M2;
+                case 0x0a ->
+                    _10_BC_PLUS_M2_PLUS_M3_PLUS_DHW;
                 default ->
                     throw new IllegalArgumentException("Unknown scheme: " + b);
+            };
+        }
+
+        private static byte encode(HeatingCircuitDhwScheme value) {
+            return switch (value) {
+                case _1_BC ->
+                    0x01;
+                case _2_BC_PLUS_DHW ->
+                    0x02;
+                case _3_M2 ->
+                    0x03;
+                case _4_M2_PLUS_DHW2 ->
+                    0x04;
+                case _5_BC_PLUS_M2 ->
+                    0x05;
+                case _6_BC_PLUS_M2_PLUS_DHW ->
+                    0x06;
+                case _7_M2_PLUS_M3 ->
+                    0x07;
+                case _8_M2_PLUS_M3_PLUS_DHW ->
+                    0x08;
+                case _9_BC_PLUS_M2_PLUS_M2 ->
+                    0x09;
+                case _10_BC_PLUS_M2_PLUS_M3_PLUS_DHW ->
+                    0x0a;
+                default ->
+                    throw new IllegalArgumentException("Cant encode scheme: " + value);
             };
         }
     }
@@ -72,8 +123,13 @@ public class HeatingCircuitDhwScheme_0x7700_0x01 extends MemArea {
     }
 
     @Name("K00_KonfiAnlagenschemaV200_NR1~0x7700")
-    public byte getHeatingCircuitDhwSchemeV200() {
-        return mem.getByte(baseAddress);
+    public HeatingCircuitDhwScheme getHeatingCircuitDhwSchemeV200() {
+        return HeatingCircuitDhwScheme.decode(mem.getByte(baseAddress));
+    }
+
+    @Name("K00_KonfiAnlagenschemaV200_NR1~0x7700")
+    public void setHeatingCircuitDhwSchemeV200(HeatingCircuitDhwScheme value) {
+        mem.setByte(baseAddress, HeatingCircuitDhwScheme.encode(value));
     }
 
 }

@@ -1,6 +1,6 @@
 /*
  * OpenV4J - Drivers for the Viessmann optolink protocol https://github.com/openv/openv/wiki
- * Copyright (C) 2009-2024, Arne Plöse and individual contributors as indicated
+ * Copyright (C) 2024, Arne Plöse and individual contributors as indicated
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -30,12 +30,62 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
+import java.nio.ByteBuffer;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Arrays;
+import java.util.Iterator;
+import java.util.LinkedList;
 
 public class MemoryImage {
+
+    private void addUpdateEntry(int addr, int size) {
+        if (size <= 0 || size > 0xff) {
+            throw new IllegalArgumentException("size: 0 < size <= 255!");
+        }
+        pendingUpdateEntries.add(new UpdateEntry(addr, (short) size));
+    }
+
+    void clearPendingUpdates() {
+        pendingUpdateEntries.clear();
+    }
+
+    class UpdateEntry {
+
+        private final int address;
+        private final short size;
+
+        public UpdateEntry(int address, short length) {
+            this.address = address;
+            this.size = length;
+        }
+
+        public int getAddress() {
+            return address;
+        }
+
+        public short getSize() {
+            return size;
+        }
+
+        void copyBytesTo(ByteBuffer buffer) {
+            buffer.put(MemoryImage.this.buffer, address, size);
+        }
+
+        /**
+         * Called when this is updated remotely.
+         */
+        void updated() {
+            pendingUpdateEntries.remove(this);
+        }
+    }
+
+    /**
+     * if the memory is modified the adress and lenght of that area is stored
+     * here for transmitting tho the remote site.
+     */
+    final LinkedList<UpdateEntry> pendingUpdateEntries = new LinkedList<>();
 
     public final static int DEFAULT_MEM_SIZE = 0x10000;
 
@@ -58,6 +108,7 @@ public class MemoryImage {
                 }
             }
         }
+        dc.clearPendingUpdates();
     }
 
     public static void checkAddressAndSize(int baseAddress, short size) {
@@ -97,6 +148,7 @@ public class MemoryImage {
     }
 
     public final void setByte(int addr, byte value) {
+        addUpdateEntry(addr, 1);
         buffer[addr] = value;
     }
 
@@ -105,6 +157,7 @@ public class MemoryImage {
     }
 
     public final void setBoolean(int addr, boolean value) {
+        addUpdateEntry(addr, 1);
         buffer[addr] = value ? (byte) 0x01 : 0x00;
     }
 
@@ -201,6 +254,7 @@ public class MemoryImage {
     }
 
     public final void setInteger(int addr, int value) {
+        addUpdateEntry(addr, 4);
         buffer[addr] = (byte) value;
         buffer[addr + 1] = (byte) ((value >> 8) & 0x00FF);
         buffer[addr + 2] = (byte) ((value >> 16) & 0x00FF);
@@ -208,11 +262,13 @@ public class MemoryImage {
     }
 
     public final void setShort(int addr, short value) {
+        addUpdateEntry(addr, 2);
         buffer[addr] = (byte) value;
         buffer[addr + 1] = (byte) ((value >> 8) & 0x00FF);
     }
 
     public final void setShortHex(int addr, short value) {
+        addUpdateEntry(addr, 2);
         buffer[addr] = (byte) ((value >> 8) & 0x00FF);
         buffer[addr + 1] = (byte) value;
     }

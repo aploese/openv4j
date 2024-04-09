@@ -1,6 +1,6 @@
 /*
  * OpenV4J - Drivers for the Viessmann optolink protocol https://github.com/openv/openv/wiki
- * Copyright (C) 2009-2024, Arne Plöse and individual contributors as indicated
+ * Copyright (C) 2024, Arne Plöse and individual contributors as indicated
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -22,7 +22,6 @@
 package de.ibapl.openv4j.core.tests;
 
 import de.ibapl.openv4j.spi.protocolhandlers.MemoryImage;
-import java.nio.ByteBuffer;
 
 /**
  *

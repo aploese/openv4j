@@ -1,6 +1,6 @@
 /*
  * OpenV4J - Drivers for the Viessmann optolink protocol https://github.com/openv/openv/wiki
- * Copyright (C) 2009-2024, Arne Plöse and individual contributors as indicated
+ * Copyright (C) 2024, Arne Plöse and individual contributors as indicated
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -22,11 +22,9 @@
 package de.ibapl.openv4j.core.tests;
 
 import de.ibapl.openv4j.api.Devices;
-import de.ibapl.openv4j.api.devices.generic.EcnsysDeviceIdent_0x00F0_0x02;
 import de.ibapl.openv4j.api.devices.generic.EcnsysDeviceIdent_0x00F8_0x08;
 import de.ibapl.openv4j.spi.emulators.KW2Emulator;
 import de.ibapl.openv4j.spi.protocolhandlers.DataContainer;
-import de.ibapl.openv4j.spi.protocolhandlers.MemArea;
 import de.ibapl.openv4j.spi.protocolhandlers.MemoryImage;
 import de.ibapl.openv4j.spi.protocolhandlers.OpenV4JAdapter;
 import de.ibapl.spsw.api.SerialPortSocket;
@@ -35,7 +33,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.nio.ByteBuffer;
 import java.util.ServiceLoader;
 import org.junit.jupiter.api.AfterEach;
 import static org.junit.jupiter.api.Assertions.*;

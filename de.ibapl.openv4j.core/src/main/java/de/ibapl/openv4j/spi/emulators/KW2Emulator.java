@@ -1,6 +1,6 @@
 /*
  * OpenV4J - Drivers for the Viessmann optolink protocol https://github.com/openv/openv/wiki
- * Copyright (C) 2009-2024, Arne Plöse and individual contributors as indicated
+ * Copyright (C) 2024, Arne Plöse and individual contributors as indicated
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -46,7 +46,7 @@ import java.util.logging.Logger;
 public class KW2Emulator extends DataContainer {
 
     private static final Logger LOG = Logger.getLogger("d.i.ov.td.KW2Dummy");
-    private final static Level LOG_LEVEL = Level.INFO;
+    private final static Level LOG_LEVEL = Level.FINEST;
 
     private final DeviceTimings dt;
     private final SerialPortSocket serialPort;
